@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemerintah Desa Rambatan Wetan - Kec. Sindang, Kab. Indramayu</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --primary: #065f46;       /* Emerald 800 - Hijau Resmi Pemerintahan */
+            --primary-dark: #064e3b;  /* Emerald 900 */
+            --primary-light: #ecfdf5; /* Emerald 50 */
+            --accent: #d97706;        /* Amber 600 - Aksen Emas/Kuning Padi */
+        }
+
+        .theme-blue {
+            --primary: #1e3a8a;       /* Blue 900 - Biru Resmi Pemerintahan */
+            --primary-dark: #172554;  /* Blue 950 */
+            --primary-light: #eff6ff; /* Blue 50 */
+            --accent: #eab308;        /* Yellow 500 */
+        }
+
+        .theme-teal {
+            --primary: #115e59;       /* Teal 800 - Khas Pesisir/Indramayu */
+            --primary-dark: #134e4a;  /* Teal 900 */
+            --primary-light: #f0fdfa; /* Teal 50 */
+            --accent: #f59e0b;        /* Amber 500 */
+        }
+
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-dark { background-color: var(--primary-dark); }
+        .bg-primary-light { background-color: var(--primary-light); }
+        .text-primary { color: var(--primary); }
+        .border-primary { border-color: var(--primary); }
+        .bg-accent { background-color: var(--accent); }
+        .text-accent { color: var(--accent); }
+
+        body {
+            color: #111827; /* Hitam pekat untuk keterbacaan maksimal */
+            background-color: #f8fafc;
+        }
+
+        /* Animasi Marquee Pengumuman */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 28s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Print Styling untuk Cetak Laporan */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-800 selection:text-white">
+
+    <!-- Notifikasi Toast / Message Box (Pengganti alert) -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- Modal Pratinjau / Detail Umum -->
+    <div id="general-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
+            <div class="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white z-10">
+                <h3 id="modal-title" class="font-display font-bold text-lg text-gray-900">Judul Informasi</h3>
+                <button onclick="closeModal()" class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-900">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="modal-body" class="p-6 text-gray-800 space-y-4 text-sm sm:text-base leading-relaxed">
+                <!-- Konten modal dinamis -->
+            </div>
+            <div class="p-4 border-t border-gray-200 bg-gray-50 flex justify-end gap-2 rounded-b-xl">
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-medium hover:bg-gray-900">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- PORTAL PUBLIK (HALAMAN DEPAN & MENU UTAMA)                            -->
+    <!-- ===================================================================== -->
+    <div id="public-portal" class="min-h-screen flex flex-col">
+        
+        <!-- Top Bar Identitas Resmi & Akses Admin -->
+        <div class="bg-primary-dark text-white text-xs py-2 border-b border-white/10 no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between items-center gap-2">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center gap-1.5 font-medium">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i>
+                        Situs Resmi Pemerintah Desa Rambatan Wetan - Kab. Indramayu
+                    </span>
+                    <span class="hidden md:inline text-white/70">|</span>
+                    <span id="topbar-date" class="hidden md:inline text-white/90">Kamis, 19 November 2026</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="topbar-phone" class="hidden sm:flex items-center gap-1 text-white/90">
+                        <i data-lucide="phone" class="w-3 h-3"></i> (0234) 271xxx
+                    </span>
+                    <button onclick="switchToAdminLogin()" class="bg-white/15 hover:bg-white/25 text-white px-3 py-1 rounded-md font-semibold flex items-center gap-1.5 transition cursor-pointer">
+                        <i data-lucide="lock" class="w-3 h-3"></i> Login Perangkat Desa
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header Utama Instansi -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-xs no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-3.5">
+                    <!-- Logo & Nama Desa -->
+                    <a href="#" onclick="navigatePublic('beranda'); return false;" class="flex items-center gap-3.5 group">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm shrink-0 border-2 border-amber-400/80">
+                            <!-- Lambang Daerah / Perisai Pemerintahan SVG -->
+                            <svg class="w-8 h-8 sm:w-9 sm:h-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(255,255,255,0.12)"/>
+                                <path d="M12 6v12M8 10h8M9 14h6" stroke="#fbbf24" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-primary">Pemerintah Kabupaten Indramayu</div>
+                            <h1 id="header-desa-name" class="font-display font-extrabold text-lg sm:text-xl text-gray-900 leading-tight">PEMERINTAH DESA RAMBATAN WETAN</h1>
+                            <p id="header-desa-sub" class="text-xs text-gray-600 font-medium">Kecamatan Sindang • Kabupaten Indramayu • Jawa Barat</p>
+                        </div>
+                    </a>
+
+                    <!-- Tombol Menu Mobile -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-lg border border-gray-300 text-gray-800 hover:bg-gray-100" aria-label="Buka Menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+
+                    <!-- Tagline Badge Desktop -->
+                    <div class="hidden xl:flex flex-col items-end text-right">
+                        <span class="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Motto Pelayanan</span>
+                        <span id="header-tagline" class="text-sm font-bold text-primary italic">"Melayani dengan Hati — Membangun Bersama Masyarakat"</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigasi Utama 7 Menu Standar Desa -->
+            <nav class="bg-primary text-white border-t border-white/10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Desktop Nav -->
+                    <ul class="hidden lg:flex items-center space-x-1 text-sm font-semibold">
+                        <li><button onclick="navigatePublic('beranda')" data-nav="beranda" class="nav-item px-4 py-3.5 hover:bg-white/15 transition flex items-center gap-1.5 border-b-2 border-amber-400 bg-white/10">BERANDA</button></li>
+                        <li><button onclick="navigatePublic('profil')" data-nav="profil" class="nav-item px-4 py-3.5 hover:bg-white/15 transition flex items-center gap-1.5 border-b-2 border-transparent">PROFIL DESA</button></li>
+                        <li><button onclick="navigatePublic('informasi')" data-nav="informasi" class="nav-item px-4 py-3.5 hover:bg-white/15 transition flex items-center gap-1.5 border-b-2 border-transparent">INFORMASI PUBLIK</button></li>
+                        <li><button onclick="navigatePublic('layanan')" data-nav="layanan" class="nav-item px-4 py-3.5 hover:bg-white/15 transition flex items-center gap-1.5 border-b-2 border-transparent">LAYANAN MASYARAKAT</button></li>
+                        <li><button onclick="navigatePublic('galeri')" data-nav="galeri" class="nav-item px-4 py-3.5 hover:bg-white/15 transition flex items-center gap-1.5 border-b-2 border-transparent">KEGIATAN & GALERI</button></li>
+                        <li><button onclick="navigatePublic('data')" data-nav="data" class="nav-item px-4 py-3.5 hover:bg-white/15 transition flex items-center gap-1.5 border-b-2 border-transparent">DATA DESA</button></li>
+                        <li><button onclick="navigatePublic('kontak')" data-nav="kontak" class="nav-item px-4 py-3.5 hover:bg-white/15 transition flex items-center gap-1.5 border-b-2 border-transparent">KONTAK & PENGADUAN</button></li>
+                    </ul>
+
+                    <!-- Mobile Dropdown Nav -->
+                    <div id="mobile-nav" class="hidden lg:hidden py-2 space-y-1 border-t border-white/15">
+                        <button onclick="navigatePublic('beranda')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/15 font-semibold text-sm">1. BERANDA</button>
+                        <button onclick="navigatePublic('profil')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/15 font-semibold text-sm">2. PROFIL DESA</button>
+                        <button onclick="navigatePublic('informasi')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/15 font-semibold text-sm">3. INFORMASI PUBLIK (APBDes & Regulasi)</button>
+                        <button onclick="navigatePublic('layanan')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/15 font-semibold text-sm">4. LAYANAN MASYARAKAT</button>
+                        <button onclick="navigatePublic('galeri')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/15 font-semibold text-sm">5. KEGIATAN & GALERI</button>
+                        <button onclick="navigatePublic('data')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/15 font-semibold text-sm">6. DATA DESA</button>
+                        <button onclick="navigatePublic('kontak')" class="w-full text-left px-3 py-2.5 rounded-lg hover:bg-white/15 font-semibold text-sm">7. KONTAK & PENGADUAN</button>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Running Text Pengumuman Resmi -->
+            <div class="bg-amber-50 border-b border-amber-200 text-gray-900 text-xs sm:text-sm py-2">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-3 overflow-hidden">
+                    <span class="bg-amber-600 text-white font-bold px-2.5 py-0.5 rounded text-xs shrink-0 uppercase tracking-wide flex items-center gap-1">
+                        <i data-lucide="megaphone" class="w-3.5 h-3.5"></i> Pengumuman
+                    </span>
+                    <div class="overflow-hidden w-full">
+                        <div id="running-announcement" class="animate-marquee font-medium text-gray-900">
+                            Pelayanan Administrasi Kependudukan & Surat Keterangan di Balai Desa Rambatan Wetan buka Senin–Jumat pukul 08.00–15.30 WIB • Penyaluran Bantuan Langsung Tunai (BLT) Dana Desa Tahap IV dilaksanakan di Aula Balai Desa • Masyarakat dapat mengakses laporan realisasi APBDes secara terbuka pada menu Informasi Publik.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- KONTEN UTAMA DINAMIS BERDASARKAN MENU -->
+        <main id="public-content" class="flex-grow">
+            <!-- Diisi otomatis oleh JavaScript -->
+        </main>
+
+        <!-- FOOTER RESMI PEMERINTAH DESA -->
+        <footer class="bg-gray-900 text-gray-200 border-t-4 border-amber-500 mt-16 no-print">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Kolom 1: Identitas -->
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold border border-amber-400">RW</div>
+                            <div>
+                                <h3 id="footer-desa-name" class="font-display font-bold text-white text-base">Desa Rambatan Wetan</h3>
+                                <p class="text-xs text-gray-400">Kec. Sindang, Kab. Indramayu</p>
+                            </div>
+                        </div>
+                        <p id="footer-tagline" class="text-sm text-gray-300 leading-relaxed">
+                            "Melayani dengan Hati — Membangun Bersama Masyarakat"
+                        </p>
+                        <p class="text-xs text-gray-400">
+                            Portal resmi keterbukaan informasi publik, transparansi anggaran desa, dan pelayanan administrasi terpadu bagi seluruh warga Desa Rambatan Wetan.
+                        </p>
+                    </div>
+
+                    <!-- Kolom 2: Tautan Cepat -->
+                    <div>
+                        <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4 border-b border-gray-700 pb-2">Informasi & Transparansi</h4>
+                        <ul class="space-y-2.5 text-sm text-gray-300">
+                            <li><button onclick="navigatePublic('profil')" class="hover:text-amber-400 transition">Profil & Sejarah Desa</button></li>
+                            <li><button onclick="navigatePublic('profil')" class="hover:text-amber-400 transition">Struktur Pemerintahan Desa</button></li>
+                            <li><button onclick="navigatePublic('informasi')" class="hover:text-amber-400 transition">Transparansi APBDes & RKPDes</button></li>
+                            <li><button onclick="navigatePublic('data')" class="hover:text-amber-400 transition">Statistik Kependudukan</button></li>
+                            <li><button onclick="navigatePublic('layanan')" class="hover:text-amber-400 transition">Pengajuan Surat Online</button></li>
+                        </ul>
+                    </div>
+
+                    <!-- Kolom 3: Jam Layanan -->
+                    <div>
+                        <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4 border-b border-gray-700 pb-2">Jam Pelayanan Kantor</h4>
+                        <ul class="space-y-2 text-sm text-gray-300">
+                            <li class="flex justify-between"><span>Senin – Kamis:</span> <span class="font-semibold text-white">08.00 – 15.30 WIB</span></li>
+                            <li class="flex justify-between"><span>Jumat:</span> <span class="font-semibold text-white">08.00 – 15.00 WIB</span></li>
+                            <li class="flex justify-between text-gray-400"><span>Istirahat:</span> <span>12.00 – 13.00 WIB</span></li>
+                            <li class="flex justify-between text-amber-400"><span>Sabtu – Minggu:</span> <span>Libur (Layanan Online 24 Jam)</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Kolom 4: Kontak Resmi -->
+                    <div>
+                        <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider mb-4 border-b border-gray-700 pb-2">Kontak Kantor Desa</h4>
+                        <ul class="space-y-2.5 text-sm text-gray-300">
+                            <li class="flex items-start gap-2.5">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-amber-400 shrink-0 mt-1"></i>
+                                <span id="footer-address">Jl. Raya Rambatan Wetan No. 01, Kec. Sindang, Kab. Indramayu, Jawa Barat 45222</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i data-lucide="phone" class="w-4 h-4 text-amber-400 shrink-0"></i>
+                                <span id="footer-phone">(0234) 271450 / 0812-2345-6789</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i data-lucide="mail" class="w-4 h-4 text-amber-400 shrink-0"></i>
+                                <span id="footer-email">pemdes@rambatanwetan.desa.id</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-4">
+                    <p>&copy; 2026 Pemerintah Desa Rambatan Wetan, Kecamatan Sindang, Kabupaten Indramayu. Hak Cipta Dilindungi.</p>
+                    <div class="flex items-center gap-4">
+                        <span>Standar Sistem Informasi Desa (SID)</span>
+                        <button onclick="switchToAdminLogin()" class="text-amber-400 hover:underline font-medium">Portal Admin</button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN LOGIN ADMIN PERANGKAT DESA                                    -->
+    <!-- ===================================================================== -->
+    <div id="admin-login-view" class="min-h-screen bg-slate-100 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 max-w-md w-full overflow-hidden">
+            <div class="bg-primary p-6 text-white text-center">
+                <div class="w-14 h-14 rounded-xl bg-white/15 border border-amber-400 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="shield" class="w-8 h-8 text-amber-400"></i>
+                </div>
+                <h2 class="font-display font-bold text-xl">Portal Perangkat Desa</h2>
+                <p class="text-xs text-white/80 mt-1">Sistem Informasi Manajemen Konten Desa Rambatan Wetan</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="p-6 space-y-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-900">
+                    <strong>Akun Demo Perangkat Desa:</strong><br>
+                    Email: <code class="font-mono font-bold">admin@rambatanwetan.desa.id</code><br>
+                    Sandi: <code class="font-mono font-bold">admin123</code>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-1">Email / Username Perangkat</label>
+                    <input type="text" id="login-email" value="admin@rambatanwetan.desa.id" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-700 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-800 mb-1">Kata Sandi</label>
+                    <input type="password" id="login-password" value="admin123" required class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-700 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg text-sm transition shadow-sm cursor-pointer">
+                    Masuk ke Dashboard Desa
+                </button>
+                <div class="text-center pt-2">
+                    <button type="button" onclick="backToPublic()" class="text-xs font-semibold text-gray-600 hover:text-gray-900 inline-flex items-center gap-1">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Kembali ke Halaman Depan Publik
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- PANEL ADMIN / DASHBOARD CMS DESA                                      -->
+    <!-- ===================================================================== -->
+    <div id="admin-dashboard-view" class="min-h-screen bg-gray-100 hidden flex-col lg:flex-row">
+        
+        <!-- Sidebar Admin -->
+        <aside class="w-full lg:w-68 bg-gray-900 text-white shrink-0 flex flex-col no-print">
+            <div class="p-5 border-b border-gray-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center font-bold border border-amber-400">RW</div>
+                    <div>
+                        <div class="font-display font-bold text-sm">CMS Desa</div>
+                        <div class="text-[11px] text-gray-400">Rambatan Wetan</div>
+                    </div>
+                </div>
+                <button onclick="backToPublic()" class="text-xs bg-white/10 hover:bg-white/20 px-2.5 py-1.5 rounded text-amber-300 font-medium" title="Lihat Situs Publik">
+                    Lihat Web ↗
+                </button>
+            </div>
+
+            <nav class="p-3 space-y-1 flex-grow text-sm">
+                <div class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400">Ringkasan</div>
+                <button onclick="navigateAdmin('overview')" data-admin-nav="overview" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white font-semibold">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard Utama
+                </button>
+
+                <div class="px-3 pt-4 pb-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400">A. Identitas & Tampilan</div>
+                <button onclick="navigateAdmin('settings')" data-admin-nav="settings" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-800">
+                    <i data-lucide="palette" class="w-4 h-4"></i> Tampilan & Identitas Desa
+                </button>
+
+                <div class="px-3 pt-4 pb-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400">B. Kelola Konten</div>
+                <button onclick="navigateAdmin('posts')" data-admin-nav="posts" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-800">
+                    <i data-lucide="newspaper" class="w-4 h-4"></i> Berita, Pengumuman & Agenda
+                </button>
+                <button onclick="navigateAdmin('documents')" data-admin-nav="documents" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-800">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> APBDes, RKPDes & Regulasi
+                </button>
+
+                <div class="px-3 pt-4 pb-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400">C. Layanan & Data</div>
+                <button onclick="navigateAdmin('services')" data-admin-nav="services" class="admin-nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-800">
+                    <span class="flex items-center gap-3"><i data-lucide="file-check" class="w-4 h-4"></i> Permohonan Surat</span>
+                    <span id="badge-surat" class="bg-amber-500 text-gray-950 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </button>
+                <button onclick="navigateAdmin('complaints')" data-admin-nav="complaints" class="admin-nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-800">
+                    <span class="flex items-center gap-3"><i data-lucide="message-square-warning" class="w-4 h-4"></i> Aspirasi & Pengaduan</span>
+                    <span id="badge-aduan" class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </button>
+                <button onclick="navigateAdmin('village-data')" data-admin-nav="village-data" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-800">
+                    <i data-lucide="users" class="w-4 h-4"></i> Data Penduduk & Ekspor
+                </button>
+
+                <div class="px-3 pt-4 pb-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400">D. Pengguna Sistem</div>
+                <button onclick="navigateAdmin('users')" data-admin-nav="users" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-300 hover:bg-gray-800">
+                    <i data-lucide="user-cog" class="w-4 h-4"></i> Akun Perangkat Desa
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-gray-800">
+                <button onclick="logoutAdmin()" class="w-full py-2 px-3 bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Keluar Sistem
+                </button>
+            </div>
+        </aside>
+
+        <!-- Area Kerja Admin -->
+        <div class="flex-grow flex flex-col min-w-0">
+            <header class="bg-white border-b border-gray-200 px-6 py-4 flex flex-wrap justify-between items-center gap-4 no-print">
+                <div>
+                    <h1 id="admin-page-title" class="font-display font-bold text-xl text-gray-900">Dashboard Utama</h1>
+                    <p class="text-xs text-gray-500">Panel Pengelolaan Resmi Pemerintah Desa Rambatan Wetan</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="resetDemoData()" class="text-xs px-3 py-1.5 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100" title="Kembalikan data awal">
+                        Reset Data Default
+                    </button>
+                    <div class="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+                        <div class="w-2 h-2 rounded-full bg-emerald-600"></div>
+                        <span id="current-admin-name" class="text-xs font-bold text-gray-800">Admin Sekdes</span>
+                    </div>
+                </div>
+            </header>
+
+            <main id="admin-content" class="p-6 flex-grow overflow-y-auto">
+                <!-- Diisi otomatis oleh JS -->
+            </main>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- LOGIKA APLIKASI & DATABASE LOKAL (STATE MANAGEMENT)                   -->
+    <!-- ===================================================================== -->
+    <script>
+        // Data Awal Standar Pemerintah Desa Rambatan Wetan, Kec. Sindang, Kab. Indramayu
+        const DEFAULT_STATE = {
+            settings: {
+                desaName: "PEMERINTAH DESA RAMBATAN WETAN",
+                kecamatan: "Sindang",
+                kabupaten: "Indramayu",
+                provinsi: "Jawa Barat",
+                tagline: "Melayani dengan Hati — Membangun Bersama Masyarakat",
+                address: "Jl. Raya Rambatan Wetan No. 01, Kec. Sindang, Kab. Indramayu, Jawa Barat 45222",
+                phone: "(0234) 271450 / 0812-2345-6789",
+                email: "pemdes@rambatanwetan.desa.id",
+                theme: "default", // default (hijau), theme-blue, theme-teal
+                announcement: "Pelayanan Administrasi Kependudukan & Surat Keterangan di Balai Desa Rambatan Wetan buka Senin–Jumat pukul 08.00–15.30 WIB • Penyaluran BLT Dana Desa Tahap IV dilaksanakan di Aula Balai Desa • Transparansi APBDes Tahun Anggaran 2026 dapat diakses masyarakat secara terbuka.",
+                banners: [
+                    {
+                        title: "Selamat Datang di Portal Resmi Desa Rambatan Wetan",
+                        subtitle: "Wujud komitmen transparansi tata kelola pemerintahan desa, keterbukaan anggaran, dan pelayanan publik yang cepat bagi warga Kecamatan Sindang, Kabupaten Indramayu.",
+                        badge: "PORTAL RESMI PEMERINTAH DESA",
+                        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80"
+                    },
+                    {
+                        title: "Transparansi Anggaran & Pembangunan Desa 2026",
+                        subtitle: "Pantau realisasi APBDes, rencana kerja pemerintah desa (RKPDes), serta program pemberdayaan petani dan pelaku UMKM lokal.",
+                        badge: "TRANSPARANSI PUBLIK",
+                        image: "https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&w=1400&q=80"
+                    }
+                ]
+            },
+            stats: {
+                penduduk: 6842,
+                lakiLaki: 3456,
+                perempuan: 3386,
+                kepalaKeluarga: 2145,
+                jumlahRW: 6,
+                jumlahRT: 24,
+                luasWilayah: "312,5 Ha"
+            },
+            perangkat: [
+                { nama: "H. Ahmad Sudrajat, S.IP", jabatan: "Kuwu / Kepala Desa Rambatan Wetan", nip: "Masa Bakti 2021–2029", foto: "https://placehold.co/300x340/065f46/ffffff?text=Kuwu+Desa" },
+                { nama: "Dedi Kurniawan, S.Sos", jabatan: "Sekretaris Desa (Carik)", nip: "Sekretariat Desa", foto: "https://placehold.co/300x340/1e3a8a/ffffff?text=Sekretaris+Desa" },
+                { nama: "Siti Aminah, S.Pd", jabatan: "Kaur Tata Usaha & Umum", nip: "Pelaksana Sekretariat", foto: "https://placehold.co/300x340/0f766e/ffffff?text=Kaur+TU" },
+                { nama: "Taufik Hidayat, S.E", jabatan: "Kaur Keuangan", nip: "Pelaksana Sekretariat", foto: "https://placehold.co/300x340/065f46/ffffff?text=Kaur+Keuangan" },
+                { nama: "Rudi Hartono", jabatan: "Kasi Pemerintahan", nip: "Pelaksana Teknis", foto: "https://placehold.co/300x340/1e3a8a/ffffff?text=Kasi+Pemerintahan" },
+                { nama: "Nurhayati, A.Md", jabatan: "Kasi Kesejahteraan & Pelayanan", nip: "Pelaksana Teknis", foto: "https://placehold.co/300x340/0f766e/ffffff?text=Kasi+Kesra" }
+            ],
+            apbdes: {
+                tahun: 2026,
+                pendapatan: { target: 2150000000, realisasi: 1985000000 },
+                belanja: { target: 2100000000, realisasi: 1840000000 },
+                pembiayaan: { target: 50000000, realisasi: 50000000 },
+                rincian: [
+                    { bidang: "Penyelenggaraan Pemerintahan Desa", anggaran: 680000000, realisasi: 645000000 },
+                    { bidang: "Pelaksanaan Pembangunan Desa (Infrastruktur & Irigasi)", anggaran: 850000000, realisasi: 760000000 },
+                    { bidang: "Pembinaan Kemasyarakatan", anggaran: 210000000, realisasi: 185000000 },
+                    { bidang: "Pemberdayaan Masyarakat (Pertanian & UMKM)", anggaran: 240000000, realisasi: 150000000 },
+                    { bidang: "Penanggulangan Bencana, Darurat & Mendesak (BLT)", anggaran: 120000000, realisasi: 100000000 }
+                ]
+            },
+            documents: [
+                { id: 1, kategori: "APBDes", judul: "Perdes No. 01 Tahun 2026 tentang APBDes Rambatan Wetan", tanggal: "15 Januari 2026", ukuran: "1,4 MB", ringkasan: "Dokumen resmi rincian pendapatan, belanja, dan pembiayaan Pemerintah Desa Rambatan Wetan Tahun Anggaran 2026." },
+                { id: 2, kategori: "RKPDes", judul: "Rencana Kerja Pemerintah Desa (RKPDes) Tahun 2026", tanggal: "10 Oktober 2025", ukuran: "2,1 MB", ringkasan: "Prioritas program pembangunan fisik, saluran irigasi pertanian, dan pemberdayaan ekonomi masyarakat." },
+                { id: 3, kategori: "LKPPD", judul: "Laporan Keterangan Penyelenggaraan Pemerintahan Desa (LKPPD) 2025", tanggal: "20 Februari 2026", ukuran: "1,8 MB", ringkasan: "Laporan pertanggungjawaban capaian kinerja Kuwu dan perangkat desa kepada BPD dan masyarakat." },
+                { id: 4, kategori: "Regulasi", judul: "Perdes No. 03 Tahun 2025 tentang Ketertiban Umum & Kebersihan Lingkungan", tanggal: "12 Agustus 2025", ukuran: "850 KB", ringkasan: "Aturan pengelolaan sampah rumah tangga, saluran drainase, dan ketertiban lingkungan RT/RW." },
+                { id: 5, kategori: "Pengadaan", judul: "Pengumuman Pengadaan Material Peningkatan Jalan Usaha Tani Blok Wetan", tanggal: "05 Mei 2026", ukuran: "620 KB", ringkasan: "Informasi terbuka paket pengadaan barang/jasa secara swakelola oleh Tim Pelaksana Kegiatan (TPK)." }
+            ],
+            posts: [
+                {
+                    id: 101,
+                    kategori: "Berita",
+                    judul: "Musyawarah Desa Penetapan RKPDes dan Prioritas Ketahanan Pangan Tahun 2026",
+                    tanggal: "14 November 2026",
+                    penulis: "Sekretariat Desa",
+                    gambar: "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=900&q=80",
+                    ringkasan: "Pemerintah Desa Rambatan Wetan bersama BPD, tokoh masyarakat, dan kelompok tani menggelar Musdes guna menyepakati prioritas pembangunan saluran irigasi tersier.",
+                    isi: "RAMBATAN WETAN — Bertempat di Aula Balai Desa Rambatan Wetan, Kecamatan Sindang, Pemerintah Desa bersama Badan Permusyawaratan Desa (BPD) menyelenggarakan Musyawarah Desa (Musdes) dalam rangka penetapan program prioritas ketahanan pangan dan perbaikan infrastruktur pertanian.\n\nKuwu Desa Rambatan Wetan dalam sambutannya menegaskan bahwa sektor pertanian padi dan hortikultura merupakan tulang punggung perekonomian warga sehingga normalisasi saluran irigasi menjadi prioritas utama tahun ini."
+                },
+                {
+                    id: 102,
+                    kategori: "Berita",
+                    judul: "Pelatihan Digitalisasi Pemasaran Produk UMKM Olahan Mangga dan Kerupuk Khas Indramayu",
+                    tanggal: "08 November 2026",
+                    penulis: "Kasi Kesejahteraan",
+                    gambar: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=80",
+                    ringkasan: "Sebanyak 45 pelaku UMKM Desa Rambatan Wetan mengikuti pelatihan pengemasan produk dan pemasaran daring untuk memperluas jangkauan pasar.",
+                    isi: "Guna meningkatkan daya saing produk lokal desa, Pemerintah Desa Rambatan Wetan mengadakan bimbingan teknis bagi pelaku Usaha Mikro, Kecil, dan Menengah (UMKM). Materi mencakup pembuatan Nomor Induk Berusaha (NIB), sertifikasi halal, serta foto produk."
+                },
+                {
+                    id: 103,
+                    kategori: "Pengumuman",
+                    judul: "Jadwal Pelayanan Perekaman KTP-el Keliling Disdukcapil Indramayu di Balai Desa",
+                    tanggal: "17 November 2026",
+                    penulis: "Kasi Pemerintahan",
+                    gambar: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80",
+                    ringkasan: "Warga berusia 17 tahun ke atas yang belum memiliki KTP-el dapat hadir pada hari Selasa mendatang dengan membawa fotokopi Kartu Keluarga.",
+                    isi: "Diberitahukan kepada seluruh warga Desa Rambatan Wetan bahwa Dinas Kependudukan dan Pencatatan Sipil Kabupaten Indramayu akan melaksanakan layanan jemput bola perekaman KTP-el dan aktivasi Identitas Kependudukan Digital (IKD) di Balai Desa mulai pukul 08.30 WIB."
+                },
+                {
+                    id: 104,
+                    kategori: "Agenda",
+                    judul: "Kerja Bakti Massal (Jumat Bersih) Normalisasi Saluran Air RW 01 s.d RW 06",
+                    tanggal: "21 November 2026",
+                    penulis: "Kasi Pemerintahan",
+                    gambar: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=900&q=80",
+                    ringkasan: "Mengantisipasi musim penghujan, seluruh Ketua RT/RW dan warga diimbau berpartisipasi membersihkan saluran drainase lingkungan.",
+                    isi: "Dalam rangka mencegah genangan air saat curah hujan tinggi, Pemerintah Desa mengundang seluruh elemen masyarakat untuk melaksanakan gerakan Jumat Bersih serentak di masing-masing blok."
+                }
+            ],
+            rtData: [
+                { rw: "RW 01 (Blok Kulon)", rtCount: 4, kk: 380, lk: 612, pr: 598 },
+                { rw: "RW 02 (Blok Tengah)", rtCount: 4, kk: 365, lk: 590, pr: 582 },
+                { rw: "RW 03 (Blok Wetan)", rtCount: 4, kk: 372, lk: 605, pr: 590 },
+                { rw: "RW 04 (Blok Karanganyar)", rtCount: 4, kk: 350, lk: 560, pr: 545 },
+                { rw: "RW 05 (Blok Sawah)", rtCount: 4, kk: 348, lk: 554, pr: 541 },
+                { rw: "RW 06 (Blok Cimanuk)", rtCount: 4, kk: 330, lk: 535, pr: 530 }
+            ],
+            umkmData: [
+                { nama: "Kerupuk Udang & Ikan 'Sari Cimanuk'", pemilik: "Ibu Hj. Rokayah", kategori: "Kuliner & Olahan Pangan", lokasi: "RW 02" },
+                { nama: "Olahan Manisan & Dodol Mangga Gedong", pemilik: "Kelompok Wanita Tani Melati", kategori: "Oleh-oleh Khas", lokasi: "RW 01" },
+                { nama: "Konveksi & Bordir Busana Muslim 'Berkah'", pemilik: "Bpk. Syarifudin", kategori: "Sandang & Kerajinan", lokasi: "RW 03" },
+                { nama: "Budidaya Ikan Lele & Nila Bioflok", pemilik: "Karang Taruna Muda Karya", kategori: "Perikanan", lokasi: "RW 06" }
+            ],
+            suratRequests: [
+                { id: "SRT-2026-001", nama: "Wahyudi Pratama", nik: "3212151204950002", jenis: "Surat Keterangan Domisili", hp: "085211223344", tanggal: "18 Nov 2026", status: "Selesai", keperluan: "Persyaratan melamar pekerjaan" },
+                { id: "SRT-2026-002", nama: "Sri Rahayu", nik: "3212155508980001", jenis: "Surat Keterangan Usaha (SKU)", hp: "081399887766", tanggal: "19 Nov 2026", status: "Diproses", keperluan: "Pengajuan KUR Mikro BRI" }
+            ],
+            complaints: [
+                { id: "ADU-01", nama: "Hendra Wijaya", kontak: "087812345678", kategori: "Infrastruktur", isi: "Mohon perbaikan lampu penerangan jalan umum (PJU) di gang masuk RT 03 RW 02 karena mati sejak 3 hari lalu.", tanggal: "18 Nov 2026", status: "Ditindaklanjuti" }
+            ],
+            users: [
+                { id: 1, nama: "Dedi Kurniawan, S.Sos", email: "admin@rambatanwetan.desa.id", role: "Super Admin (Sekretaris Desa)" },
+                { id: 2, nama: "Nurhayati, A.Md", email: "pelayanan@rambatanwetan.desa.id", role: "Operator Layanan & Konten" }
+            ]
+        };
+
+        // Muat State dari LocalStorage atau gunakan Default
+        let appState = JSON.parse(localStorage.getItem('desa_rambatan_wetan_db')) || JSON.parse(JSON.stringify(DEFAULT_STATE));
+        let currentPublicPage = 'beranda';
+        let currentAdminPage = 'overview';
+        let currentBannerIndex = 0;
+
+        function saveState() {
+            localStorage.setItem('desa_rambatan_wetan_db', JSON.stringify(appState));
+            applyGlobalSettings();
+        }
+
+        function resetDemoData() {
+            appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+            saveState();
+            renderAdminPage(currentAdminPage);
+            showToast("Data berhasil dikembalikan ke pengaturan awal standar desa.", "success");
+        }
+
+        // Terapkan Tema & Identitas Global ke Header/Footer
+        function applyGlobalSettings() {
+            const s = appState.settings;
+            document.body.className = `antialiased selection:bg-emerald-800 selection:text-white ${s.theme !== 'default' ? s.theme : ''}`;
+            
+            document.getElementById('header-desa-name').textContent = s.desaName;
+            document.getElementById('header-desa-sub').textContent = `Kecamatan ${s.kecamatan} • Kabupaten ${s.kabupaten} • ${s.provinsi}`;
+            document.getElementById('header-tagline').textContent = `"${s.tagline}"`;
+            document.getElementById('topbar-phone').innerHTML = `<i data-lucide="phone" class="w-3 h-3"></i> ${s.phone.split('/')[0]}`;
+            document.getElementById('running-announcement').textContent = s.announcement;
+
+            document.getElementById('footer-desa-name').textContent = s.desaName;
+            document.getElementById('footer-tagline').textContent = `"${s.tagline}"`;
+            document.getElementById('footer-address').textContent = s.address;
+            document.getElementById('footer-phone').textContent = s.phone;
+            document.getElementById('footer-email').textContent = s.email;
+
+            // Update Badge Admin
+            const pendingSurat = appState.suratRequests.filter(x => x.status !== 'Selesai').length;
+            const pendingAduan = appState.complaints.filter(x => x.status !== 'Selesai').length;
+            document.getElementById('badge-surat').textContent = pendingSurat;
+            document.getElementById('badge-aduan').textContent = pendingAduan;
+            lucide.createIcons();
+        }
+
+        // Toast Notification (Pengganti alert())
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-emerald-900 border-emerald-500 text-white',
+                error: 'bg-red-900 border-red-500 text-white',
+                info: 'bg-gray-900 border-amber-400 text-white'
+            };
+            toast.className = `${colors[type] || colors.info} border-l-4 p-4 rounded-lg shadow-xl text-sm font-medium flex items-start justify-between gap-3 pointer-events-auto transition-all`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" class="text-white/70 hover:text-white font-bold">&times;</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => { if (toast.parentElement) toast.remove(); }, 4500);
+        }
+
+        // Modal Helper
+        function openModal(title, htmlContent) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').innerHTML = htmlContent;
+            const modal = document.getElementById('general-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('general-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mobile-nav');
+            nav.classList.toggle('hidden');
+        }
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
+        }
+
+        // =====================================================================
+        // NAVIGASI & RENDER HALAMAN PUBLIK (7 MENU UTAMA)
+        // =====================================================================
+        function navigatePublic(page) {
+            currentPublicPage = page;
+            document.getElementById('mobile-nav').classList.add('hidden');
+
+            // Update active border nav
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                if (btn.dataset.nav === page) {
+                    btn.classList.add('border-amber-400', 'bg-white/10');
+                    btn.classList.remove('border-transparent');
+                } else {
+                    btn.classList.remove('border-amber-400', 'bg-white/10');
+                    btn.classList.add('border-transparent');
+                }
+            });
+
+            const container = document.getElementById('public-content');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (page === 'beranda') container.innerHTML = renderBeranda();
+            else if (page === 'profil') container.innerHTML = renderProfilDesa();
+            else if (page === 'informasi') container.innerHTML = renderInformasiPublik();
+            else if (page === 'layanan') container.innerHTML = renderLayananMasyarakat();
+            else if (page === 'galeri') container.innerHTML = renderKegiatanGaleri();
+            else if (page === 'data') container.innerHTML = renderDataDesa();
+            else if (page === 'kontak') container.innerHTML = renderKontakPengaduan();
+
+            lucide.createIcons();
+        }
+
+        // 1. HALAMAN BERANDA
+        function renderBeranda() {
+            const banner = appState.settings.banners[currentBannerIndex] || appState.settings.banners[0];
+            const st = appState.stats;
+            const latestPosts = appState.posts.slice(0, 3);
+            const pctBelanja = Math.round((appState.apbdes.belanja.realisasi / appState.apbdes.belanja.target) * 100);
+
+            return `
+                <!-- Hero Slider Banner -->
+                <section class="relative bg-gray-900 text-white overflow-hidden">
+                    <div class="relative h-[420px] sm:h-[480px] w-full">
+                        <img src="${banner.image}" onerror="this.src='https://placehold.co/1400x500/065f46/ffffff?text=Pemerintah+Desa+Rambatan+Wetan'" alt="Banner Desa" class="w-full h-full object-cover opacity-45">
+                        <div class="absolute inset-0 bg-gradient-to-r from-gray-950/90 via-gray-900/70 to-transparent"></div>
+                        
+                        <div class="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
+                            <span class="inline-flex items-center gap-2 bg-amber-500 text-gray-950 font-bold text-xs px-3 py-1 rounded-md w-fit mb-4 tracking-wide">
+                                <i data-lucide="landmark" class="w-3.5 h-3.5"></i> ${banner.badge}
+                            </span>
+                            <h2 class="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl max-w-3xl leading-tight mb-4">
+                                ${banner.title}
+                            </h2>
+                            <p class="text-gray-200 text-sm sm:text-base max-w-2xl mb-7 leading-relaxed">
+                                ${banner.subtitle}
+                            </p>
+                            <div class="flex flex-wrap gap-3">
+                                <button onclick="navigatePublic('layanan')" class="px-5 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg text-sm flex items-center gap-2 border border-white/20 shadow-lg cursor-pointer">
+                                    <i data-lucide="file-text" class="w-4 h-4"></i> Ajukan Surat Online
+                                </button>
+                                <button onclick="navigatePublic('informasi')" class="px-5 py-3 bg-white text-gray-900 hover:bg-gray-100 font-bold rounded-lg text-sm flex items-center gap-2 shadow-lg cursor-pointer">
+                                    <i data-lucide="pie-chart" class="w-4 h-4 text-primary"></i> Transparansi APBDes
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Kontrol Slider -->
+                        <div class="absolute bottom-5 right-6 flex items-center gap-2">
+                            <button onclick="changeBanner(-1)" class="p-2 rounded-lg bg-black/50 hover:bg-black/80 text-white border border-white/20" aria-label="Banner Sebelumnya">
+                                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                            </button>
+                            <span class="text-xs font-semibold bg-black/50 px-3 py-2 rounded-lg border border-white/10">
+                                ${currentBannerIndex + 1} / ${appState.settings.banners.length}
+                            </span>
+                            <button onclick="changeBanner(1)" class="p-2 rounded-lg bg-black/50 hover:bg-black/80 text-white border border-white/20" aria-label="Banner Berikutnya">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tautan Cepat Layanan Penting -->
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+                        <button onclick="navigatePublic('layanan')" class="bg-white p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 hover:border-primary text-left flex items-start gap-3.5 transition group cursor-pointer">
+                            <div class="p-3 rounded-lg bg-primary-light text-primary group-hover:bg-primary group-hover:text-white transition shrink-0">
+                                <i data-lucide="file-plus-2" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-gray-900 text-sm sm:text-base">Layanan Surat</h3>
+                                <p class="text-xs text-gray-600 mt-0.5">Pengajuan SKU, SKTM, Domisili online</p>
+                            </div>
+                        </button>
+
+                        <button onclick="navigatePublic('informasi')" class="bg-white p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 hover:border-primary text-left flex items-start gap-3.5 transition group cursor-pointer">
+                            <div class="p-3 rounded-lg bg-amber-50 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition shrink-0">
+                                <i data-lucide="coins" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-gray-900 text-sm sm:text-base">APBDes ${appState.apbdes.tahun}</h3>
+                                <p class="text-xs text-gray-600 mt-0.5">Laporan realisasi anggaran terbuka</p>
+                            </div>
+                        </button>
+
+                        <button onclick="navigatePublic('data')" class="bg-white p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 hover:border-primary text-left flex items-start gap-3.5 transition group cursor-pointer">
+                            <div class="p-3 rounded-lg bg-blue-50 text-blue-800 group-hover:bg-blue-800 group-hover:text-white transition shrink-0">
+                                <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-gray-900 text-sm sm:text-base">Data Statistik</h3>
+                                <p class="text-xs text-gray-600 mt-0.5">Demografi penduduk per RT/RW</p>
+                            </div>
+                        </button>
+
+                        <button onclick="navigatePublic('kontak')" class="bg-white p-4 sm:p-5 rounded-xl shadow-md border border-gray-200 hover:border-primary text-left flex items-start gap-3.5 transition group cursor-pointer">
+                            <div class="p-3 rounded-lg bg-red-50 text-red-700 group-hover:bg-red-700 group-hover:text-white transition shrink-0">
+                                <i data-lucide="message-square-plus" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-gray-900 text-sm sm:text-base">Pengaduan Warga</h3>
+                                <p class="text-xs text-gray-600 mt-0.5">Sampaikan aspirasi & laporan resmi</p>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Sambutan Kuwu & Statistik Singkat Desa -->
+                <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <!-- Sambutan Kepala Desa / Kuwu -->
+                        <div class="lg:col-span-7 bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs">
+                            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary mb-2">
+                                <span class="w-2 h-2 rounded-full bg-primary"></span> Sambutan Pimpinan Desa
+                            </div>
+                            <h2 class="font-display font-bold text-2xl text-gray-900 mb-5">Mewujudkan Tata Kelola Desa yang Transparan dan Melayani</h2>
+                            <div class="flex flex-col sm:flex-row gap-6 items-start">
+                                <img src="${appState.perangkat[0].foto}" alt="Kuwu Desa Rambatan Wetan" class="w-32 h-40 object-cover rounded-xl border-2 border-gray-200 shrink-0 mx-auto sm:mx-0">
+                                <div class="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+                                    <p><em>Assalamu'alaikum Warahmatullahi Wabarakatuh,</em></p>
+                                    <p>Puji syukur ke hadirat Allah SWT, kehadiran website resmi <strong>Pemerintah Desa Rambatan Wetan, Kecamatan Sindang, Kabupaten Indramayu</strong> ini merupakan wujud komitmen kami dalam menghadirkan pelayanan publik berbasis digital yang mudah diakses oleh seluruh masyarakat.</p>
+                                    <p>Melalui portal ini, warga dapat memantau penggunaan anggaran desa (APBDes), mengunduh peraturan desa, hingga mengajukan permohonan surat keterangan dari rumah.</p>
+                                    <div class="pt-2">
+                                        <div class="font-display font-bold text-gray-900">${appState.perangkat[0].nama}</div>
+                                        <div class="text-xs font-semibold text-primary">${appState.perangkat[0].jabatan}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ringkasan Statistik Desa -->
+                        <div class="lg:col-span-5 bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs">
+                            <div class="flex items-center justify-between mb-5">
+                                <div>
+                                    <div class="text-xs font-bold uppercase tracking-wider text-primary">Monografi Singkat</div>
+                                    <h3 class="font-display font-bold text-xl text-gray-900">Statistik Desa Rambatan Wetan</h3>
+                                </div>
+                                <button onclick="navigatePublic('data')" class="text-xs font-bold text-primary hover:underline">Detail &rarr;</button>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3.5">
+                                <div class="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                                    <div class="text-xs text-gray-600 font-medium">Total Penduduk</div>
+                                    <div class="font-display font-extrabold text-2xl text-gray-900 mt-1">${st.penduduk.toLocaleString('id-ID')}</div>
+                                    <div class="text-[11px] text-emerald-700 font-semibold mt-0.5">Jiwa Terdaftar</div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                                    <div class="text-xs text-gray-600 font-medium">Kepala Keluarga</div>
+                                    <div class="font-display font-extrabold text-2xl text-gray-900 mt-1">${st.kepalaKeluarga.toLocaleString('id-ID')}</div>
+                                    <div class="text-[11px] text-blue-700 font-semibold mt-0.5">Kartu Keluarga</div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-gray-50 border border-gray-200">
+                                    <div class="text-xs text-gray-600 font-medium">Wilayah Administratif</div>
+                                    <div class="font-display font-extrabold text-2xl text-gray-900 mt-1">${st.jumlahRW} RW / ${st.jumlahRT} RT</div>
+                                    <div class="text-[11px] text-gray-600 font-semibold mt-0.5">Luas: ${st.luasWilayah}</div>
+                                </div>
+                                <div class="p-4 rounded-xl bg-primary-light border border-primary/20">
+                                    <div class="text-xs text-gray-700 font-medium">Serapan APBDes</div>
+                                    <div class="font-display font-extrabold text-2xl text-primary mt-1">${pctBelanja}%</div>
+                                    <div class="text-[11px] text-gray-700 font-semibold mt-0.5">TA ${appState.apbdes.tahun}</div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 pt-4 border-t border-gray-200 flex justify-between text-xs text-gray-600">
+                                <span>Laki-laki: <strong>${st.lakiLaki.toLocaleString('id-ID')} jiwa</strong></span>
+                                <span>Perempuan: <strong>${st.perempuan.toLocaleString('id-ID')} jiwa</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Berita & Pengumuman Terbaru -->
+                <section class="bg-white border-t border-gray-200 py-12">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex flex-wrap justify-between items-end mb-8 gap-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-primary">Kabar Terkini</span>
+                                <h2 class="font-display font-bold text-2xl sm:text-3xl text-gray-900 mt-1">Berita & Pengumuman Desa</h2>
+                            </div>
+                            <button onclick="navigatePublic('galeri')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-bold text-gray-800 hover:bg-gray-100 transition">
+                                Lihat Semua Berita &rarr;
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            ${latestPosts.map(post => `
+                                <article class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col">
+                                    <div class="relative h-48 bg-gray-200">
+                                        <img src="${post.gambar}" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Berita+Desa'" alt="${post.judul}" class="w-full h-full object-cover">
+                                        <span class="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-2.5 py-1 rounded">${post.kategori}</span>
+                                    </div>
+                                    <div class="p-5 flex-grow flex flex-col">
+                                        <div class="text-xs text-gray-500 font-medium mb-2 flex items-center gap-2">
+                                            <span>${post.tanggal}</span> • <span>${post.penulis}</span>
+                                        </div>
+                                        <h3 class="font-display font-bold text-lg text-gray-900 mb-2 line-clamp-2">${post.judul}</h3>
+                                        <p class="text-sm text-gray-600 line-clamp-3 mb-4 flex-grow">${post.ringkasan}</p>
+                                        <button onclick="viewPostDetail(${post.id})" class="text-sm font-bold text-primary hover:underline inline-flex items-center gap-1 mt-auto cursor-pointer">
+                                            Baca Selengkapnya <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </article>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function changeBanner(dir) {
+            const len = appState.settings.banners.length;
+            currentBannerIndex = (currentBannerIndex + dir + len) % len;
+            navigatePublic('beranda');
+        }
+
+        function viewPostDetail(id) {
+            const post = appState.posts.find(p => p.id === id);
+            if (!post) return;
+            openModal(post.judul, `
+                <img src="${post.gambar}" class="w-full h-64 object-cover rounded-xl mb-4" onerror="this.style.display='none'">
+                <div class="flex flex-wrap gap-2 text-xs text-gray-600 font-semibold mb-3">
+                    <span class="bg-primary-light text-primary px-2.5 py-1 rounded">${post.kategori}</span>
+                    <span class="py-1">Dipublikasikan: ${post.tanggal}</span>
+                    <span class="py-1">• Oleh: ${post.penulis}</span>
+                </div>
+                <div class="space-y-3 text-gray-800 whitespace-pre-line leading-relaxed">
+                    ${post.isi}
+                </div>
+            `);
+        }
+
+        // 2. HALAMAN PROFIL DESA
+        function renderProfilDesa() {
+            return `
+                <div class="bg-primary-dark text-white py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-xs text-amber-400 font-bold uppercase tracking-wider mb-1">Profil Pemerintahan & Wilayah</div>
+                        <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Profil Desa Rambatan Wetan</h1>
+                        <p class="text-sm text-white/80 mt-1">Sejarah, Visi Misi, Struktur Perangkat Desa, Kondisi Geografis, dan Potensi Wilayah</p>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <!-- Sejarah & Geografis -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs space-y-4">
+                            <h2 class="font-display font-bold text-xl text-gray-900 flex items-center gap-2">
+                                <i data-lucide="book-open" class="w-5 h-5 text-primary"></i> Sejarah Singkat Desa
+                            </h2>
+                            <p class="text-sm sm:text-base text-gray-800 leading-relaxed">
+                                Desa Rambatan Wetan merupakan salah satu desa agraris strategis yang terletak di wilayah Kecamatan Sindang, Kabupaten Indramayu, Provinsi Jawa Barat. Nama "Rambatan" berakar dari sejarah perkembangan permukiman di sepanjang aliran irigasi Sungai Cimanuk pada masa lampau, di mana wilayah bagian timur (<em>Wetan</em> dalam bahasa Jawa Indramayu) berkembang menjadi sentra pertanian pangan yang subur.
+                            </p>
+                            <p class="text-sm sm:text-base text-gray-800 leading-relaxed">
+                                Seiring perkembangan tata kelola pemerintahan daerah di Kabupaten Indramayu, Desa Rambatan Wetan terus bertransformasi menjadi desa yang mandiri dengan menggabungkan kearifan lokal masyarakat pesisir-agraris dengan modernisasi pelayanan publik.
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs space-y-4">
+                            <h2 class="font-display font-bold text-xl text-gray-900 flex items-center gap-2">
+                                <i data-lucide="map" class="w-5 h-5 text-primary"></i> Letak Geografis & Batas Wilayah
+                            </h2>
+                            <p class="text-sm text-gray-700 leading-relaxed">
+                                Secara topografis, Desa Rambatan Wetan berada di dataran rendah Kabupaten Indramayu dengan ketinggian ± 6 meter di atas permukaan laut dan luas wilayah mencapai <strong>${appState.stats.luasWilayah}</strong>.
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm pt-2">
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                                    <span class="text-xs font-bold text-gray-500 block">Sebelah Utara</span>
+                                    <span class="font-semibold text-gray-900">Desa Panyindangan Wetan</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                                    <span class="text-xs font-bold text-gray-500 block">Sebelah Selatan</span>
+                                    <span class="font-semibold text-gray-900">Kecamatan Lohbener / Sungai Cimanuk</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                                    <span class="text-xs font-bold text-gray-500 block">Sebelah Barat</span>
+                                    <span class="font-semibold text-gray-900">Desa Rambatan Kulon</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200">
+                                    <span class="text-xs font-bold text-gray-500 block">Sebelah Timur</span>
+                                    <span class="font-semibold text-gray-900">Desa Sindang / Babadan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visi & Misi -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs">
+                        <div class="text-center max-w-3xl mx-auto mb-8">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary">Arah Kebijakan Pembangunan</span>
+                            <h2 class="font-display font-bold text-2xl text-gray-900 mt-1">Visi & Misi Pemerintah Desa Rambatan Wetan</h2>
+                            <div class="mt-4 p-5 rounded-xl bg-primary-light border border-primary/20">
+                                <div class="text-xs font-bold text-primary uppercase mb-1">VISI DESA</div>
+                                <p class="font-display font-bold text-lg sm:text-xl text-gray-900">
+                                    "Terwujudnya Desa Rambatan Wetan yang Religius, Maju, Mandiri, Transparan, dan Sejahtera Berbasis Pertanian serta Ekonomi Kerakyatan."
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl border border-gray-200 flex gap-3.5">
+                                <span class="w-8 h-8 rounded-lg bg-primary text-white font-bold flex items-center justify-center shrink-0">1</span>
+                                <p class="text-sm text-gray-800">Meningkatkan kualitas pelayanan publik yang cepat, ramah, transparan, dan bebas pungutan liar.</p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-gray-200 flex gap-3.5">
+                                <span class="w-8 h-8 rounded-lg bg-primary text-white font-bold flex items-center justify-center shrink-0">2</span>
+                                <p class="text-sm text-gray-800">Membangun dan memelihara infrastruktur jalan lingkungan serta saluran irigasi pertanian secara merata.</p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-gray-200 flex gap-3.5">
+                                <span class="w-8 h-8 rounded-lg bg-primary text-white font-bold flex items-center justify-center shrink-0">3</span>
+                                <p class="text-sm text-gray-800">Memberdayakan kelompok tani, pemuda Karang Taruna, serta pelaku UMKM lokal berbasis potensi desa.</p>
+                            </div>
+                            <div class="p-4 rounded-xl border border-gray-200 flex gap-3.5">
+                                <span class="w-8 h-8 rounded-lg bg-primary text-white font-bold flex items-center justify-center shrink-0">4</span>
+                                <p class="text-sm text-gray-800">Memperkuat nilai-nilai keagamaan, gotong royong, dan keamanan ketertiban masyarakat di setiap RT/RW.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Struktur Organisasi Perangkat Desa -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs">
+                        <h2 class="font-display font-bold text-xl text-gray-900 mb-6 flex items-center gap-2">
+                            <i data-lucide="users" class="w-5 h-5 text-primary"></i> Susunan Organisasi & Perangkat Desa
+                        </h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${appState.perangkat.map(p => `
+                                <div class="border border-gray-200 rounded-xl p-4 flex items-center gap-4 hover:border-primary transition">
+                                    <img src="${p.foto}" alt="${p.nama}" class="w-20 h-24 object-cover rounded-lg border border-gray-200 shrink-0">
+                                    <div>
+                                        <span class="text-[11px] font-bold uppercase tracking-wide text-primary bg-primary-light px-2 py-0.5 rounded">${p.nip}</span>
+                                        <h3 class="font-display font-bold text-base text-gray-900 mt-1.5">${p.nama}</h3>
+                                        <p class="text-xs font-semibold text-gray-600 mt-0.5">${p.jabatan}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Potensi Desa -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs">
+                        <h2 class="font-display font-bold text-xl text-gray-900 mb-6">Potensi Unggulan Desa Rambatan Wetan</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            <div class="p-5 rounded-xl bg-emerald-50 border border-emerald-200">
+                                <i data-lucide="sprout" class="w-8 h-8 text-emerald-800 mb-3"></i>
+                                <h3 class="font-bold text-gray-900 mb-1">Pertanian Padi & Mangga</h3>
+                                <p class="text-xs text-gray-700 leading-relaxed">Lahan sawah irigasi teknis seluas ± 215 Ha dengan produktivitas padi tinggi serta perkebunan mangga gedong gincu khas Indramayu.</p>
+                            </div>
+                            <div class="p-5 rounded-xl bg-blue-50 border border-blue-200">
+                                <i data-lucide="fish" class="w-8 h-8 text-blue-800 mb-3"></i>
+                                <h3 class="font-bold text-gray-900 mb-1">Perikanan Air Tawar</h3>
+                                <p class="text-xs text-gray-700 leading-relaxed">Budidaya ikan lele, nila, dan gurame yang dikelola kelompok pembudidaya ikan (Pokdakan) di sekitar bantaran irigasi.</p>
+                            </div>
+                            <div class="p-5 rounded-xl bg-amber-50 border border-amber-200">
+                                <i data-lucide="store" class="w-8 h-8 text-amber-800 mb-3"></i>
+                                <h3 class="font-bold text-gray-900 mb-1">UMKM & Industri Rumah Tangga</h3>
+                                <p class="text-xs text-gray-700 leading-relaxed">Sentra produksi kerupuk ikan/udang, olahan pangan lokal, serta usaha konveksi rumahan yang menyerap tenaga kerja warga.</p>
+                            </div>
+                            <div class="p-5 rounded-xl bg-purple-50 border border-purple-200">
+                                <i data-lucide="landmark" class="w-8 h-8 text-purple-800 mb-3"></i>
+                                <h3 class="font-bold text-gray-900 mb-1">Seni Budaya & Tradisi</h3>
+                                <p class="text-xs text-gray-700 leading-relaxed">Pelestarian tradisi Sedekah Bumi, Mapag Sri, dan kesenian tradisional Indramayu sebagai perekat kerukunan warga.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. HALAMAN INFORMASI PUBLIK (TRANSPARANSI APBDes, RKPDes, REGUlASI)
+        function renderInformasiPublik() {
+            const apb = appState.apbdes;
+            const pctPendapatan = Math.round((apb.pendapatan.realisasi / apb.pendapatan.target) * 100);
+            const pctBelanja = Math.round((apb.belanja.realisasi / apb.belanja.target) * 100);
+
+            return `
+                <div class="bg-primary-dark text-white py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-xs text-amber-400 font-bold uppercase tracking-wider mb-1">Keterbukaan Informasi Publik (PPID Desa)</div>
+                        <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Transparansi Anggaran & Regulasi Desa</h1>
+                        <p class="text-sm text-white/80 mt-1">Laporan Realisasi APBDes, RKPDes, LKPPD, Peraturan Desa, dan Pengadaan Barang/Jasa</p>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <!-- Ringkasan APBDes -->
+                    <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs">
+                        <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                            <div>
+                                <span class="text-xs font-bold uppercase text-primary">Infografis Keuangan Desa</span>
+                                <h2 class="font-display font-bold text-xl sm:text-2xl text-gray-900">Realisasi APBDes Tahun Anggaran ${apb.tahun}</h2>
+                            </div>
+                            <button onclick="window.print()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg text-xs font-bold flex items-center gap-2 no-print">
+                                <i data-lucide="printer" class="w-4 h-4"></i> Cetak Laporan APBDes
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                            <div class="p-5 rounded-xl bg-emerald-50 border border-emerald-200">
+                                <div class="text-xs font-bold text-emerald-900 uppercase">Pendapatan Desa</div>
+                                <div class="font-display font-extrabold text-xl sm:text-2xl text-gray-900 mt-1">${formatRupiah(apb.pendapatan.realisasi)}</div>
+                                <div class="text-xs text-gray-600 mt-1">Target: ${formatRupiah(apb.pendapatan.target)} (${pctPendapatan}%)</div>
+                                <div class="w-full bg-emerald-200 h-2 rounded-full mt-3 overflow-hidden">
+                                    <div class="bg-emerald-700 h-full" style="width: ${pctPendapatan}%"></div>
+                                </div>
+                            </div>
+
+                            <div class="p-5 rounded-xl bg-blue-50 border border-blue-200">
+                                <div class="text-xs font-bold text-blue-900 uppercase">Belanja Desa</div>
+                                <div class="font-display font-extrabold text-xl sm:text-2xl text-gray-900 mt-1">${formatRupiah(apb.belanja.realisasi)}</div>
+                                <div class="text-xs text-gray-600 mt-1">Pagu: ${formatRupiah(apb.belanja.target)} (${pctBelanja}%)</div>
+                                <div class="w-full bg-blue-200 h-2 rounded-full mt-3 overflow-hidden">
+                                    <div class="bg-blue-800 h-full" style="width: ${pctBelanja}%"></div>
+                                </div>
+                            </div>
+
+                            <div class="p-5 rounded-xl bg-amber-50 border border-amber-200">
+                                <div class="text-xs font-bold text-amber-900 uppercase">Pembiayaan Desa</div>
+                                <div class="font-display font-extrabold text-xl sm:text-2xl text-gray-900 mt-1">${formatRupiah(apb.pembiayaan.realisasi)}</div>
+                                <div class="text-xs text-gray-600 mt-1">SiLPA Tahun Sebelumnya (100%)</div>
+                                <div class="w-full bg-amber-200 h-2 rounded-full mt-3 overflow-hidden">
+                                    <div class="bg-amber-600 h-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabel Rincian Bidang Belanja -->
+                        <h3 class="font-display font-bold text-base text-gray-900 mb-3">Rincian Realisasi Belanja Berdasarkan Bidang</h3>
+                        <div class="overflow-x-auto border border-gray-200 rounded-xl">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-gray-100 text-gray-800 font-bold border-b border-gray-200">
+                                    <tr>
+                                        <th class="p-3.5">Bidang Pelaksanaan</th>
+                                        <th class="p-3.5 text-right">Anggaran (Rp)</th>
+                                        <th class="p-3.5 text-right">Realisasi (Rp)</th>
+                                        <th class="p-3.5 text-center">Capaian</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    ${apb.rincian.map(r => {
+                                        const pct = Math.round((r.realisasi / r.anggaran) * 100);
+                                        return `
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="p-3.5 font-medium text-gray-900">${r.bidang}</td>
+                                                <td class="p-3.5 text-right text-gray-700">${formatRupiah(r.anggaran)}</td>
+                                                <td class="p-3.5 text-right font-semibold text-gray-900">${formatRupiah(r.realisasi)}</td>
+                                                <td class="p-3.5 text-center">
+                                                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900">${pct}%</span>
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Daftar Dokumen Publik (RKPDes, LKPPD, Perdes, Pengadaan) -->
+                    <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs">
+                        <h2 class="font-display font-bold text-xl text-gray-900 mb-2">Arsip Dokumen Publik & Regulasi Desa</h2>
+                        <p class="text-sm text-gray-600 mb-6">Masyarakat berhak mengakses dan mengunduh dokumen perencanaan, peraturan desa, dan pengadaan barang/jasa.</p>
+
+                        <div class="space-y-3">
+                            ${appState.documents.map(doc => `
+                                <div class="p-4 rounded-xl border border-gray-200 hover:border-primary flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition">
+                                    <div class="space-y-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-primary-light text-primary">${doc.kategori}</span>
+                                            <span class="text-xs text-gray-500">${doc.tanggal} • PDF (${doc.ukuran})</span>
+                                        </div>
+                                        <h3 class="font-display font-bold text-gray-900 text-base">${doc.judul}</h3>
+                                        <p class="text-xs text-gray-600">${doc.ringkasan}</p>
+                                    </div>
+                                    <div class="flex items-center gap-2 shrink-0">
+                                        <button onclick="previewDocument(${doc.id})" class="px-3.5 py-2 bg-primary text-white hover:bg-primary-dark rounded-lg text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                                            <i data-lucide="eye" class="w-3.5 h-3.5"></i> Pratinjau & Unduh
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function previewDocument(id) {
+            const doc = appState.documents.find(d => d.id === id);
+            if (!doc) return;
+            openModal(doc.judul, `
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs space-y-1">
+                    <div><strong>Kategori Dokumen:</strong> ${doc.kategori}</div>
+                    <div><strong>Tanggal Penetapan:</strong> ${doc.tanggal}</div>
+                    <div><strong>Instansi Penerbit:</strong> Pemerintah Desa Rambatan Wetan, Kec. Sindang, Kab. Indramayu</div>
+                </div>
+                <p class="text-sm text-gray-800 leading-relaxed">${doc.ringkasan}</p>
+                <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900">
+                    Dokumen resmi ini telah diverifikasi oleh Sekretariat Desa Rambatan Wetan sesuai amanat UU No. 14 Tahun 2008 tentang Keterbukaan Informasi Publik dan UU No. 6 Tahun 2014 tentang Desa.
+                </div>
+                <button onclick="showToast('Mengunduh berkas: ${doc.judul}.pdf', 'success'); closeModal();" class="w-full py-2.5 bg-primary text-white font-bold rounded-lg text-sm flex items-center justify-center gap-2 cursor-pointer">
+                    <i data-lucide="download" class="w-4 h-4"></i> Unduh Berkas Resmi (PDF - ${doc.ukuran})
+                </button>
+            `);
+        }
+
+        // 4. HALAMAN LAYANAN MASYARAKAT
+        function renderLayananMasyarakat() {
+            return `
+                <div class="bg-primary-dark text-white py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-xs text-amber-400 font-bold uppercase tracking-wider mb-1">Pelayanan Administrasi Terpadu</div>
+                        <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Layanan Masyarakat Desa Rambatan Wetan</h1>
+                        <p class="text-sm text-white/80 mt-1">Panduan Persyaratan Surat, Pengajuan Permohonan Online, Jadwal Pelayanan, dan Tanya Jawab (FAQ)</p>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Panduan Persyaratan Surat -->
+                        <div class="lg:col-span-6 space-y-4">
+                            <h2 class="font-display font-bold text-xl text-gray-900">Panduan Persyaratan Administrasi</h2>
+                            <p class="text-sm text-gray-600">Seluruh layanan pembuatan surat keterangan di Kantor Desa Rambatan Wetan <strong>GRATIS (Rp 0,-)</strong>.</p>
+
+                            <div class="space-y-3">
+                                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                                    <h3 class="font-bold text-gray-900 text-sm flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Surat Keterangan Domisili / Kependudukan
+                                    </h3>
+                                    <ul class="list-disc list-inside text-xs text-gray-700 mt-2 space-y-1">
+                                        <li>Surat Pengantar dari Ketua RT dan RW setempat</li>
+                                        <li>Fotokopi Kartu Tanda Penduduk (KTP-el)</li>
+                                        <li>Fotokopi Kartu Keluarga (KK) terbaru</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                                    <h3 class="font-bold text-gray-900 text-sm flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Surat Keterangan Usaha (SKU)
+                                    </h3>
+                                    <ul class="list-disc list-inside text-xs text-gray-700 mt-2 space-y-1">
+                                        <li>Surat Pengantar RT/RW</li>
+                                        <li>Fotokopi KTP-el & Kartu Keluarga (KK)</li>
+                                        <li>Foto lokasi/tempat usaha yang dijalankan di wilayah desa</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                                    <h3 class="font-bold text-gray-900 text-sm flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Surat Keterangan Tidak Mampu (SKTM)
+                                    </h3>
+                                    <ul class="list-disc list-inside text-xs text-gray-700 mt-2 space-y-1">
+                                        <li>Surat Pengantar RT/RW yang menerangkan kondisi ekonomi keluarga</li>
+                                        <li>Fotokopi KTP-el dan KK pemohon</li>
+                                        <li>Surat pernyataan tujuan penggunaan (Beasiswa / Kesehatan)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                                    <h3 class="font-bold text-gray-900 text-sm flex items-center gap-2">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Pengantar Nikah (Model N1 - N4)
+                                    </h3>
+                                    <ul class="list-disc list-inside text-xs text-gray-700 mt-2 space-y-1">
+                                        <li>Surat Pengantar RT/RW</li>
+                                        <li>Fotokopi KTP-el, KK, Akta Kelahiran, dan Ijazah terakhir calon mempelai</li>
+                                        <li>Fotokopi KTP kedua orang tua & pas foto latar biru 2x3 (4 lembar)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulir Pengajuan Surat Online -->
+                        <div class="lg:col-span-6">
+                            <div class="bg-white p-6 sm:p-8 rounded-2xl border-2 border-primary/20 shadow-sm">
+                                <span class="text-xs font-bold uppercase tracking-wider text-primary">Layanan Mandiri Warga</span>
+                                <h2 class="font-display font-bold text-xl text-gray-900 mt-1 mb-2">Formulir Pengajuan Surat Online</h2>
+                                <p class="text-xs text-gray-600 mb-5">Isi data di bawah ini agar operator desa dapat menyiapkan draf surat Anda sebelum diambil ke Balai Desa.</p>
+
+                                <form onsubmit="submitSuratOnline(event)" class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-800 mb-1">Nama Lengkap (Sesuai KTP) *</label>
+                                        <input type="text" id="surat-nama" required placeholder="Contoh: Ahmad Fauzi" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm">
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-800 mb-1">NIK (16 Digit) *</label>
+                                            <input type="text" id="surat-nik" maxlength="16" minlength="16" required placeholder="321215xxxxxxxxxx" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-800 mb-1">Nomor WhatsApp Aktif *</label>
+                                            <input type="tel" id="surat-hp" required placeholder="0812xxxxxxxx" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-800 mb-1">Jenis Surat yang Diajukan *</label>
+                                        <select id="surat-jenis" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm bg-white">
+                                            <option value="Surat Keterangan Domisili">Surat Keterangan Domisili</option>
+                                            <option value="Surat Keterangan Usaha (SKU)">Surat Keterangan Usaha (SKU)</option>
+                                            <option value="Surat Keterangan Tidak Mampu (SKTM)">Surat Keterangan Tidak Mampu (SKTM)</option>
+                                            <option value="Surat Pengantar SKCK">Surat Pengantar SKCK</option>
+                                            <option value="Surat Pengantar Nikah (N1-N4)">Surat Pengantar Nikah (N1-N4)</option>
+                                            <option value="Surat Keterangan Kelahiran / Kematian">Surat Keterangan Kelahiran / Kematian</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-800 mb-1">Keperluan / Keterangan Tambahan *</label>
+                                        <textarea id="surat-keperluan" rows="3" required placeholder="Jelaskan keperluan pembuatan surat (misal: Persyaratan administrasi bank / pendaftaran sekolah)" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm"></textarea>
+                                    </div>
+                                    <button type="submit" class="w-full py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg text-sm transition shadow-sm cursor-pointer">
+                                        Kirim Permohonan Surat
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Pertanyaan Umum -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200">
+                        <h2 class="font-display font-bold text-xl text-gray-900 mb-4">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-gray-900 mb-1">Berapa biaya pembuatan surat keterangan di Balai Desa?</h3>
+                                <p class="text-gray-700 text-xs leading-relaxed">Tidak dipungut biaya apa pun (GRATIS). Apabila menemukan pungutan liar, harap laporkan melalui menu Kontak & Pengaduan.</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                <h3 class="font-bold text-gray-900 mb-1">Berapa lama proses penyelesaian surat?</h3>
+                                <p class="text-gray-700 text-xs leading-relaxed">Apabila berkas persyaratan lengkap, surat keterangan dapat selesai dalam waktu 15–30 menit pada jam kerja kantor desa.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function submitSuratOnline(e) {
+            e.preventDefault();
+            const newReq = {
+                id: `SRT-2026-00${appState.suratRequests.length + 1}`,
+                nama: document.getElementById('surat-nama').value,
+                nik: document.getElementById('surat-nik').value,
+                hp: document.getElementById('surat-hp').value,
+                jenis: document.getElementById('surat-jenis').value,
+                keperluan: document.getElementById('surat-keperluan').value,
+                tanggal: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }),
+                status: 'Menunggu Verifikasi'
+            };
+            appState.suratRequests.unshift(newReq);
+            saveState();
+            e.target.reset();
+            openModal("Permohonan Surat Berhasil Dikirim", `
+                <div class="text-center space-y-3 py-2">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                        <i data-lucide="check" class="w-6 h-6"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-lg text-gray-900">Nomor Registrasi: ${newReq.id}</h4>
+                    <p class="text-sm text-gray-700">Permohonan <strong>${newReq.jenis}</strong> atas nama <strong>${newReq.nama}</strong> telah masuk ke sistem operator Balai Desa Rambatan Wetan.</p>
+                    <p class="text-xs text-gray-500">Silakan datang ke loket pelayanan Balai Desa dengan membawa KTP/KK asli untuk pengambilan dokumen fisik.</p>
+                </div>
+            `);
+        }
+
+        // 5. HALAMAN KEGIATAN & GALERI
+        function renderKegiatanGaleri() {
+            return `
+                <div class="bg-primary-dark text-white py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-xs text-amber-400 font-bold uppercase tracking-wider mb-1">Publikasi & Dokumentasi</div>
+                        <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Berita, Agenda & Galeri Kegiatan Desa</h1>
+                        <p class="text-sm text-white/80 mt-1">Dokumentasi pembangunan, kegiatan kemasyarakatan, dan jadwal agenda Pemerintah Desa Rambatan Wetan</p>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+                    <!-- Daftar Berita & Pengumuman -->
+                    <div>
+                        <h2 class="font-display font-bold text-xl text-gray-900 mb-6">Berita, Pengumuman & Agenda Terbaru</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${appState.posts.map(post => `
+                                <article class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-xs flex flex-col">
+                                    <img src="${post.gambar}" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Kegiatan+Desa'" class="w-full h-48 object-cover">
+                                    <div class="p-5 flex-grow flex flex-col">
+                                        <div class="flex items-center justify-between text-xs mb-2">
+                                            <span class="font-bold text-primary bg-primary-light px-2.5 py-0.5 rounded">${post.kategori}</span>
+                                            <span class="text-gray-500">${post.tanggal}</span>
+                                        </div>
+                                        <h3 class="font-display font-bold text-lg text-gray-900 mb-2">${post.judul}</h3>
+                                        <p class="text-sm text-gray-600 mb-4 flex-grow">${post.ringkasan}</p>
+                                        <button onclick="viewPostDetail(${post.id})" class="text-sm font-bold text-primary hover:underline inline-flex items-center gap-1 cursor-pointer">
+                                            Baca Detail <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </article>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Galeri Foto Dokumentasi -->
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200">
+                        <h2 class="font-display font-bold text-xl text-gray-900 mb-2">Galeri Foto Kegiatan Desa</h2>
+                        <p class="text-sm text-gray-600 mb-6">Dokumentasi visual pelaksanaan program kerja dan kegiatan sosial kemasyarakatan.</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            ${appState.posts.map(p => `
+                                <div onclick="viewPostDetail(${p.id})" class="group relative rounded-xl overflow-hidden aspect-square bg-gray-100 cursor-pointer border border-gray-200">
+                                    <img src="${p.gambar}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
+                                        <p class="text-white text-xs font-semibold line-clamp-2">${p.judul}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 6. HALAMAN DATA DESA
+        function renderDataDesa() {
+            const st = appState.stats;
+            return `
+                <div class="bg-primary-dark text-white py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-xs text-amber-400 font-bold uppercase tracking-wider mb-1">Statistik & Monografi</div>
+                        <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Data Kependudukan, Sarana & UMKM Desa</h1>
+                        <p class="text-sm text-white/80 mt-1">Basis data resmi Desa Rambatan Wetan untuk perencanaan pembangunan berbasis data</p>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+                    <!-- Tabel Data Penduduk per RW/RT -->
+                    <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs">
+                        <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                            <div>
+                                <h2 class="font-display font-bold text-xl text-gray-900">Data Kependudukan Berdasarkan Wilayah RW / RT</h2>
+                                <p class="text-xs text-gray-600">Rekapitulasi jumlah Kepala Keluarga (KK) dan penduduk laki-laki/perempuan.</p>
+                            </div>
+                            <button onclick="exportCSV('penduduk')" class="px-4 py-2 bg-primary text-white rounded-lg text-xs font-bold flex items-center gap-2 cursor-pointer">
+                                <i data-lucide="download" class="w-4 h-4"></i> Unduh Data (Excel/CSV)
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto border border-gray-200 rounded-xl">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-gray-100 font-bold text-gray-800 border-b border-gray-200">
+                                    <tr>
+                                        <th class="p-3.5">Wilayah Rukun Warga (RW)</th>
+                                        <th class="p-3.5 text-center">Jumlah RT</th>
+                                        <th class="p-3.5 text-right">Jumlah KK</th>
+                                        <th class="p-3.5 text-right">Laki-laki</th>
+                                        <th class="p-3.5 text-right">Perempuan</th>
+                                        <th class="p-3.5 text-right">Total Jiwa</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    ${appState.rtData.map(r => `
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="p-3.5 font-semibold text-gray-900">${r.rw}</td>
+                                            <td class="p-3.5 text-center">${r.rtCount} RT</td>
+                                            <td class="p-3.5 text-right">${r.kk.toLocaleString('id-ID')}</td>
+                                            <td class="p-3.5 text-right">${r.lk.toLocaleString('id-ID')}</td>
+                                            <td class="p-3.5 text-right">${r.pr.toLocaleString('id-ID')}</td>
+                                            <td class="p-3.5 text-right font-bold text-primary">${(r.lk + r.pr).toLocaleString('id-ID')}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                                <tfoot class="bg-gray-50 font-bold border-t-2 border-gray-300">
+                                    <tr>
+                                        <td class="p-3.5">TOTAL KESELURUHAN</td>
+                                        <td class="p-3.5 text-center">${st.jumlahRT} RT</td>
+                                        <td class="p-3.5 text-right">${st.kepalaKeluarga.toLocaleString('id-ID')}</td>
+                                        <td class="p-3.5 text-right">${st.lakiLaki.toLocaleString('id-ID')}</td>
+                                        <td class="p-3.5 text-right">${st.perempuan.toLocaleString('id-ID')}</td>
+                                        <td class="p-3.5 text-right text-primary">${st.penduduk.toLocaleString('id-ID')}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Data Sarana Prasarana & UMKM -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs">
+                            <h2 class="font-display font-bold text-xl text-gray-900 mb-4">Data Sarana & Prasarana Umum</h2>
+                            <div class="grid grid-cols-2 gap-3 text-sm">
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex justify-between items-center">
+                                    <span class="text-gray-700">Masjid & Musholla</span>
+                                    <span class="font-bold text-gray-900">14 Unit</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex justify-between items-center">
+                                    <span class="text-gray-700">PAUD / TK / RA</span>
+                                    <span class="font-bold text-gray-900">4 Unit</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex justify-between items-center">
+                                    <span class="text-gray-700">SD / MI Sederajat</span>
+                                    <span class="font-bold text-gray-900">3 Unit</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex justify-between items-center">
+                                    <span class="text-gray-700">Posyandu & Polindes</span>
+                                    <span class="font-bold text-gray-900">6 Unit</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex justify-between items-center">
+                                    <span class="text-gray-700">Lapangan Olahraga</span>
+                                    <span class="font-bold text-gray-900">2 Unit</span>
+                                </div>
+                                <div class="p-3.5 bg-gray-50 rounded-xl border border-gray-200 flex justify-between items-center">
+                                    <span class="text-gray-700">BUMDes Aktif</span>
+                                    <span class="font-bold text-emerald-700">BUMDes Karya Mandiri</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xs">
+                            <h2 class="font-display font-bold text-xl text-gray-900 mb-4">Direktori UMKM Unggulan Desa</h2>
+                            <div class="space-y-3">
+                                ${appState.umkmData.map(u => `
+                                    <div class="p-3.5 rounded-xl border border-gray-200 flex justify-between items-center gap-3">
+                                        <div>
+                                            <div class="font-bold text-sm text-gray-900">${u.nama}</div>
+                                            <div class="text-xs text-gray-600">Pengelola: ${u.pemilik} • ${u.kategori}</div>
+                                        </div>
+                                        <span class="text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-1 rounded shrink-0">${u.lokasi}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 7. HALAMAN KONTAK & PENGADUAN
+        function renderKontakPengaduan() {
+            const s = appState.settings;
+            return `
+                <div class="bg-primary-dark text-white py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="text-xs text-amber-400 font-bold uppercase tracking-wider mb-1">Saluran Komunikasi & Aspirasi</div>
+                        <h1 class="font-display font-extrabold text-2xl sm:text-3xl">Kontak & Layanan Pengaduan Masyarakat</h1>
+                        <p class="text-sm text-white/80 mt-1">Sampaikan saran, kritik membangun, maupun laporan pelayanan langsung kepada Pemerintah Desa</p>
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Informasi Kantor & Peta -->
+                        <div class="lg:col-span-5 space-y-6">
+                            <div class="bg-white p-6 rounded-2xl border border-gray-200 space-y-4">
+                                <h2 class="font-display font-bold text-lg text-gray-900">Kantor Kepala Desa Rambatan Wetan</h2>
+                                <div class="space-y-3 text-sm text-gray-800">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="map-pin" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                        <div>
+                                            <strong class="block text-xs text-gray-500 uppercase">Alamat Kantor</strong>
+                                            <span>${s.address}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="phone" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                        <div>
+                                            <strong class="block text-xs text-gray-500 uppercase">Telepon / Hotline WhatsApp</strong>
+                                            <span>${s.phone}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="mail" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                        <div>
+                                            <strong class="block text-xs text-gray-500 uppercase">Email Resmi</strong>
+                                            <span>${s.email}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Peta Lokasi Wilayah -->
+                            <div class="bg-white p-3 rounded-2xl border border-gray-200 overflow-hidden">
+                                <iframe 
+                                    title="Peta Desa Rambatan Wetan Sindang Indramayu"
+                                    src="https://www.openstreetmap.org/export/embed.html?bbox=108.3050%2C-6.3650%2C108.3350%2C-6.3400&layer=mapnik" 
+                                    class="w-full h-64 rounded-xl border-0">
+                                </iframe>
+                                <div class="text-xs text-gray-500 text-center py-2">Koordinat Wilayah: Kec. Sindang, Kab. Indramayu, Jawa Barat</div>
+                            </div>
+                        </div>
+
+                        <!-- Formulir Aspirasi & Pengaduan -->
+                        <div class="lg:col-span-7">
+                            <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-xs">
+                                <h2 class="font-display font-bold text-xl text-gray-900 mb-2">Formulir Aspirasi & Pengaduan Warga</h2>
+                                <p class="text-sm text-gray-600 mb-6">Identitas pelapor dijaga kerahasiaannya. Laporan akan diteruskan kepada perangkat desa terkait untuk ditindaklanjuti.</p>
+
+                                <form onsubmit="submitComplaint(event)" class="space-y-4">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-800 mb-1">Nama Pelapor *</label>
+                                            <input type="text" id="aduan-nama" required placeholder="Nama lengkap Anda" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-800 mb-1">Nomor HP / Email Kontak *</label>
+                                            <input type="text" id="aduan-kontak" required placeholder="08xxxxxxxxxx" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-800 mb-1">Kategori Laporan *</label>
+                                        <select id="aduan-kategori" class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm bg-white">
+                                            <option value="Infrastruktur & Lingkungan">Infrastruktur, Jalan & Saluran Air</option>
+                                            <option value="Pelayanan Administrasi">Pelayanan Administrasi Kantor Desa</option>
+                                            <option value="Bantuan Sosial">Data Bantuan Sosial (BLT/PKH/BPNT)</option>
+                                            <option value="Keamanan & Ketertiban">Keamanan & Ketertiban Lingkungan</option>
+                                            <option value="Usulan Pembangunan">Usulan / Aspirasi Pembangunan Desa</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-800 mb-1">Isi Laporan / Aspirasi Lengkap *</label>
+                                        <textarea id="aduan-isi" rows="5" required placeholder="Tuliskan detail lokasi, waktu kejadian, dan usulan tindak lanjut secara jelas..." class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm"></textarea>
+                                    </div>
+                                    <button type="submit" class="px-6 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg text-sm transition cursor-pointer">
+                                        Kirim Laporan ke Pemerintah Desa
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function submitComplaint(e) {
+            e.preventDefault();
+            const newAduan = {
+                id: `ADU-0${appState.complaints.length + 1}`,
+                nama: document.getElementById('aduan-nama').value,
+                kontak: document.getElementById('aduan-kontak').value,
+                kategori: document.getElementById('aduan-kategori').value,
+                isi: document.getElementById('aduan-isi').value,
+                tanggal: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }),
+                status: 'Baru Masuk'
+            };
+            appState.complaints.unshift(newAduan);
+            saveState();
+            e.target.reset();
+            showToast(`Terima kasih! Aspirasi/Pengaduan Anda (${newAduan.id}) telah diterima oleh admin desa.`, "success");
+        }
+
+        // =====================================================================
+        // SISTEM LOGIN & PANEL ADMIN DASHBOARD CMS
+        // =====================================================================
+        function switchToAdminLogin() {
+            document.getElementById('public-portal').classList.add('hidden');
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            const loginView = document.getElementById('admin-login-view');
+            loginView.classList.remove('hidden');
+            loginView.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function backToPublic() {
+            document.getElementById('admin-login-view').classList.add('hidden');
+            document.getElementById('admin-login-view').classList.remove('flex');
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            document.getElementById('admin-dashboard-view').classList.remove('flex');
+            document.getElementById('public-portal').classList.remove('hidden');
+            navigatePublic(currentPublicPage);
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-password').value.trim();
+
+            if (email && pass.length >= 4) {
+                document.getElementById('admin-login-view').classList.add('hidden');
+                document.getElementById('admin-login-view').classList.remove('flex');
+                const dash = document.getElementById('admin-dashboard-view');
+                dash.classList.remove('hidden');
+                dash.classList.add('flex');
+                navigateAdmin('overview');
+                showToast("Berhasil masuk ke Panel Admin Pemerintah Desa Rambatan Wetan.", "success");
+            } else {
+                showToast("Email atau kata sandi tidak valid.", "error");
+            }
+        }
+
+        function logoutAdmin() {
+            backToPublic();
+            showToast("Anda telah keluar dari Panel Admin.", "info");
+        }
+
+        function navigateAdmin(page) {
+            currentAdminPage = page;
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                if (btn.dataset.adminNav === page) {
+                    btn.classList.add('bg-primary', 'text-white', 'font-semibold');
+                    btn.classList.remove('text-gray-300', 'hover:bg-gray-800');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white', 'font-semibold');
+                    btn.classList.add('text-gray-300', 'hover:bg-gray-800');
+                }
+            });
+
+            const titles = {
+                'overview': 'Dashboard Ringkasan Sistem',
+                'settings': 'A. Pengaturan Tampilan & Identitas Desa',
+                'posts': 'B. Kelola Berita, Pengumuman & Agenda',
+                'documents': 'B. Kelola Dokumen APBDes, RKPDes & Regulasi',
+                'services': 'C. Kelola Permohonan Surat Masyarakat',
+                'complaints': 'C. Kotak Masuk Aspirasi & Pengaduan Warga',
+                'village-data': 'C. Pembaruan Data Penduduk & Ekspor Laporan',
+                'users': 'D. Manajemen Pengguna Perangkat Desa'
+            };
+            document.getElementById('admin-page-title').textContent = titles[page] || 'Dashboard';
+
+            const content = document.getElementById('admin-content');
+            if (page === 'overview') content.innerHTML = renderAdminOverview();
+            else if (page === 'settings') content.innerHTML = renderAdminSettings();
+            else if (page === 'posts') content.innerHTML = renderAdminPosts();
+            else if (page === 'documents') content.innerHTML = renderAdminDocuments();
+            else if (page === 'services') content.innerHTML = renderAdminServices();
+            else if (page === 'complaints') content.innerHTML = renderAdminComplaints();
+            else if (page === 'village-data') content.innerHTML = renderAdminVillageData();
+            else if (page === 'users') content.innerHTML = renderAdminUsers();
+
+            lucide.createIcons();
+        }
+
+        // Admin Overview
+        function renderAdminOverview() {
+            return `
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-gray-200">
+                            <div class="text-xs font-bold text-gray-500 uppercase">Total Berita & Agenda</div>
+                            <div class="font-display font-extrabold text-2xl text-gray-900 mt-1">${appState.posts.length} Publikasi</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-gray-200">
+                            <div class="text-xs font-bold text-gray-500 uppercase">Dokumen Transparansi</div>
+                            <div class="font-display font-extrabold text-2xl text-primary mt-1">${appState.documents.length} Berkas</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-gray-200">
+                            <div class="text-xs font-bold text-gray-500 uppercase">Permohonan Surat Online</div>
+                            <div class="font-display font-extrabold text-2xl text-amber-600 mt-1">${appState.suratRequests.length} Pengajuan</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-gray-200">
+                            <div class="text-xs font-bold text-gray-500 uppercase">Aspirasi & Pengaduan</div>
+                            <div class="font-display font-extrabold text-2xl text-red-600 mt-1">${appState.complaints.length} Laporan</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-gray-200">
+                        <h3 class="font-display font-bold text-base text-gray-900 mb-3">Panduan Cepat Pengelolaan Situs Desa</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <strong class="block text-primary mb-1">1. Sesuaikan Tema & Banner</strong>
+                                <p class="text-xs text-gray-600">Gunakan menu <em>Tampilan & Identitas</em> untuk mengubah teks pengumuman berjalan, warna tema resmi, atau gambar slider beranda.</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <strong class="block text-primary mb-1">2. Publikasi Transparansi</strong>
+                                <p class="text-xs text-gray-600">Perbarui laporan realisasi APBDes dan unggah dokumen RKPDes/Perdes terbaru agar dapat diakses warga.</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <strong class="block text-primary mb-1">3. Tindak Lanjut Layanan</strong>
+                                <p class="text-xs text-gray-600">Periksa permohonan surat online dan pengaduan masyarakat secara berkala dan perbarui status penyelesaiannya.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // A. Pengaturan Tampilan & Identitas
+        function renderAdminSettings() {
+            const s = appState.settings;
+            return `
+                <form onsubmit="saveAdminSettings(event)" class="bg-white p-6 rounded-xl border border-gray-200 max-w-4xl space-y-5">
+                    <h3 class="font-display font-bold text-lg text-gray-900 border-b pb-3">Identitas Resmi, Warna Tema & Banner Utama</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Nama Instansi Desa</label>
+                            <input type="text" id="set-name" value="${s.desaName}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Tagline / Motto Pelayanan</label>
+                            <input type="text" id="set-tagline" value="${s.tagline}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Nomor Telepon / WhatsApp Kantor</label>
+                            <input type="text" id="set-phone" value="${s.phone}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Email Resmi Desa</label>
+                            <input type="email" id="set-email" value="${s.email}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Alamat Lengkap Kantor Desa</label>
+                        <input type="text" id="set-address" value="${s.address}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Teks Pengumuman Berjalan (Running Text Header)</label>
+                        <textarea id="set-announcement" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">${s.announcement}</textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Warna Tema Resmi Pemerintahan</label>
+                            <select id="set-theme" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white">
+                                <option value="default" ${s.theme === 'default' ? 'selected' : ''}>Hijau Tua Pemerintahan (Default)</option>
+                                <option value="theme-blue" ${s.theme === 'theme-blue' ? 'selected' : ''}>Biru Tua Resmi (Standar Instansi)</option>
+                                <option value="theme-teal" ${s.theme === 'theme-teal' ? 'selected' : ''}>Hijau Toska Pesisir Indramayu</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Judul Banner Slider Utama #1</label>
+                            <input type="text" id="set-banner-title" value="${s.banners[0].title}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">URL Gambar Banner Utama #1</label>
+                        <input type="url" id="set-banner-img" value="${s.banners[0].image}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                    </div>
+
+                    <div class="pt-3 flex gap-3">
+                        <button type="submit" class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white font-bold rounded-lg text-sm cursor-pointer">
+                            Simpan & Terapkan ke Situs
+                        </button>
+                        <button type="button" onclick="backToPublic()" class="px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50">
+                            Lihat Hasil di Halaman Depan
+                        </button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function saveAdminSettings(e) {
+            e.preventDefault();
+            appState.settings.desaName = document.getElementById('set-name').value;
+            appState.settings.tagline = document.getElementById('set-tagline').value;
+            appState.settings.phone = document.getElementById('set-phone').value;
+            appState.settings.email = document.getElementById('set-email').value;
+            appState.settings.address = document.getElementById('set-address').value;
+            appState.settings.announcement = document.getElementById('set-announcement').value;
+            appState.settings.theme = document.getElementById('set-theme').value;
+            appState.settings.banners[0].title = document.getElementById('set-banner-title').value;
+            appState.settings.banners[0].image = document.getElementById('set-banner-img').value;
+            saveState();
+            showToast("Pengaturan tampilan dan identitas desa berhasil diperbarui!", "success");
+        }
+
+        // B. Kelola Berita, Pengumuman & Agenda
+        function renderAdminPosts() {
+            return `
+                <div class="space-y-6">
+                    <form onsubmit="addAdminPost(event)" class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+                        <h3 class="font-display font-bold text-base text-gray-900">Tambah Berita / Pengumuman / Agenda Baru</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Judul Publikasi *</label>
+                                <input type="text" id="post-title" required placeholder="Judul berita atau pengumuman resmi..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Kategori *</label>
+                                <select id="post-cat" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white">
+                                    <option value="Berita">Berita Desa</option>
+                                    <option value="Pengumuman">Pengumuman Resmi</option>
+                                    <option value="Agenda">Agenda Kegiatan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Isi Lengkap Berita / Pengumuman *</label>
+                            <textarea id="post-body" rows="3" required placeholder="Tuliskan informasi lengkap dengan bahasa Indonesia baku..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white font-bold rounded-lg text-xs cursor-pointer">
+                            + Publikasikan Sekarang
+                        </button>
+                    </form>
+
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-100 font-bold border-b">
+                                <tr>
+                                    <th class="p-3.5">Judul Publikasi</th>
+                                    <th class="p-3.5">Kategori</th>
+                                    <th class="p-3.5">Tanggal</th>
+                                    <th class="p-3.5 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                ${appState.posts.map(p => `
+                                    <tr>
+                                        <td class="p-3.5 font-medium text-gray-900">${p.judul}</td>
+                                        <td class="p-3.5"><span class="px-2 py-0.5 rounded text-xs font-bold bg-primary-light text-primary">${p.kategori}</span></td>
+                                        <td class="p-3.5 text-xs text-gray-600">${p.tanggal}</td>
+                                        <td class="p-3.5 text-right">
+                                            <button onclick="deletePost(${p.id})" class="text-xs text-red-600 hover:underline font-bold">Hapus</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addAdminPost(e) {
+            e.preventDefault();
+            const body = document.getElementById('post-body').value;
+            appState.posts.unshift({
+                id: Date.now(),
+                judul: document.getElementById('post-title').value,
+                kategori: document.getElementById('post-cat').value,
+                tanggal: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }),
+                penulis: 'Admin Desa',
+                gambar: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80',
+                ringkasan: body.substring(0, 130) + '...',
+                isi: body
+            });
+            saveState();
+            renderAdminPage('posts');
+            showToast("Konten baru berhasil dipublikasikan ke halaman depan.", "success");
+        }
+
+        function deletePost(id) {
+            appState.posts = appState.posts.filter(p => p.id !== id);
+            saveState();
+            renderAdminPage('posts');
+            showToast("Publikasi telah dihapus.", "info");
+        }
+
+        // B. Kelola APBDes & Dokumen Publik
+        function renderAdminDocuments() {
+            const apb = appState.apbdes;
+            return `
+                <div class="space-y-6">
+                    <form onsubmit="updateApbdes(event)" class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+                        <h3 class="font-display font-bold text-base text-gray-900">Pembaruan Angka Realisasi APBDes TA ${apb.tahun}</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Realisasi Pendapatan Desa (Rp)</label>
+                                <input type="number" id="apb-pendapatan" value="${apb.pendapatan.realisasi}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Realisasi Belanja Desa (Rp)</label>
+                                <input type="number" id="apb-belanja" value="${apb.belanja.realisasi}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white font-bold rounded-lg text-xs cursor-pointer">
+                            Perbarui Angka APBDes
+                        </button>
+                    </form>
+
+                    <form onsubmit="addDocument(event)" class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+                        <h3 class="font-display font-bold text-base text-gray-900">Unggah Dokumen Publik Baru (RKPDes / Perdes / Laporan)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Nama Dokumen *</label>
+                                <input type="text" id="doc-judul" required placeholder="Contoh: Perdes No. 04 Tahun 2026 tentang..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Kategori</label>
+                                <select id="doc-kat" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white">
+                                    <option value="APBDes">APBDes</option>
+                                    <option value="RKPDes">RKPDes</option>
+                                    <option value="LKPPD">LKPPD</option>
+                                    <option value="Regulasi">Regulasi / Perdes</option>
+                                    <option value="Pengadaan">Pengadaan Barang/Jasa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Ringkasan Isi Dokumen *</label>
+                            <input type="text" id="doc-ringkasan" required placeholder="Penjelasan singkat isi dokumen untuk publik..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white font-bold rounded-lg text-xs cursor-pointer">
+                            + Tambahkan Dokumen ke Portal
+                        </button>
+                    </form>
+                </div>
+            `;
+        }
+
+        function updateApbdes(e) {
+            e.preventDefault();
+            appState.apbdes.pendapatan.realisasi = Number(document.getElementById('apb-pendapatan').value);
+            appState.apbdes.belanja.realisasi = Number(document.getElementById('apb-belanja').value);
+            saveState();
+            showToast("Data realisasi APBDes berhasil diperbarui!", "success");
+        }
+
+        function addDocument(e) {
+            e.preventDefault();
+            appState.documents.unshift({
+                id: Date.now(),
+                kategori: document.getElementById('doc-kat').value,
+                judul: document.getElementById('doc-judul').value,
+                tanggal: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }),
+                ukuran: '1,2 MB',
+                ringkasan: document.getElementById('doc-ringkasan').value
+            });
+            saveState();
+            e.target.reset();
+            showToast("Dokumen publik berhasil ditambahkan ke menu Informasi Publik.", "success");
+        }
+
+        // C. Kelola Permohonan Surat
+        function renderAdminServices() {
+            return `
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                    <div class="p-5 border-b flex justify-between items-center">
+                        <h3 class="font-display font-bold text-base text-gray-900">Daftar Permohonan Surat Warga</h3>
+                        <button onclick="exportCSV('surat')" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold">Ekspor Excel/CSV</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-100 font-bold border-b">
+                                <tr>
+                                    <th class="p-3.5">No. Reg</th>
+                                    <th class="p-3.5">Pemohon & NIK</th>
+                                    <th class="p-3.5">Jenis Surat</th>
+                                    <th class="p-3.5">Keperluan</th>
+                                    <th class="p-3.5">Status</th>
+                                    <th class="p-3.5 text-right">Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                ${appState.suratRequests.map((s, idx) => `
+                                    <tr>
+                                        <td class="p-3.5 font-mono text-xs font-bold">${s.id}</td>
+                                        <td class="p-3.5">
+                                            <div class="font-bold text-gray-900">${s.nama}</div>
+                                            <div class="text-xs text-gray-500">NIK: ${s.nik} • HP: ${s.hp}</div>
+                                        </td>
+                                        <td class="p-3.5 font-medium">${s.jenis}</td>
+                                        <td class="p-3.5 text-xs text-gray-600">${s.keperluan}</td>
+                                        <td class="p-3.5">
+                                            <span class="px-2.5 py-1 rounded-full text-xs font-bold ${s.status === 'Selesai' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${s.status}</span>
+                                        </td>
+                                        <td class="p-3.5 text-right">
+                                            ${s.status !== 'Selesai' ? `<button onclick="markSuratDone(${idx})" class="px-3 py-1 bg-primary text-white rounded text-xs font-bold">Tandai Selesai</button>` : '<span class="text-xs text-gray-400">Terlayani</span>'}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function markSuratDone(idx) {
+            appState.suratRequests[idx].status = 'Selesai';
+            saveState();
+            renderAdminPage('services');
+            showToast("Status permohonan surat diperbarui menjadi Selesai.", "success");
+        }
+
+        // C. Kelola Pengaduan Masyarakat
+        function renderAdminComplaints() {
+            return `
+                <div class="space-y-4">
+                    ${appState.complaints.map((c, idx) => `
+                        <div class="bg-white p-5 rounded-xl border border-gray-200 flex flex-col sm:flex-row justify-between gap-4">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-mono text-xs font-bold text-gray-500">${c.id}</span>
+                                    <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-900">${c.kategori}</span>
+                                    <span class="text-xs text-gray-500">${c.tanggal}</span>
+                                </div>
+                                <h4 class="font-bold text-gray-900 text-sm">Pelapor: ${c.nama} (${c.kontak})</h4>
+                                <p class="text-sm text-gray-800 pt-1">${c.isi}</p>
+                            </div>
+                            <div class="flex sm:flex-col items-end justify-between shrink-0">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${c.status === 'Selesai' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">${c.status}</span>
+                                ${c.status !== 'Selesai' ? `<button onclick="markComplaintDone(${idx})" class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-bold">Tandai Selesai</button>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function markComplaintDone(idx) {
+            appState.complaints[idx].status = 'Selesai';
+            saveState();
+            renderAdminPage('complaints');
+            showToast("Laporan pengaduan warga telah ditandai selesai.", "success");
+        }
+
+        // C. Pembaruan Data Penduduk & Ekspor
+        function renderAdminVillageData() {
+            const st = appState.stats;
+            return `
+                <div class="space-y-6">
+                    <form onsubmit="saveVillageStats(event)" class="bg-white p-6 rounded-xl border border-gray-200 max-w-3xl space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3">
+                            <h3 class="font-display font-bold text-base text-gray-900">Perbarui Data Statistik Kependudukan Desa</h3>
+                            <div class="flex gap-2">
+                                <button type="button" onclick="exportCSV('penduduk')" class="px-3 py-1.5 bg-emerald-700 text-white rounded-lg text-xs font-bold">Ekspor Excel (CSV)</button>
+                                <button type="button" onclick="window.print()" class="px-3 py-1.5 bg-gray-800 text-white rounded-lg text-xs font-bold">Cetak PDF</button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Penduduk Laki-laki</label>
+                                <input type="number" id="st-lk" value="${st.lakiLaki}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Penduduk Perempuan</label>
+                                <input type="number" id="st-pr" value="${st.perempuan}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Jumlah Kepala Keluarga (KK)</label>
+                                <input type="number" id="st-kk" value="${st.kepalaKeluarga}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            </div>
+                        </div>
+                        <button type="submit" class="px-5 py-2 bg-primary text-white font-bold rounded-lg text-xs cursor-pointer">
+                            Simpan Pembaruan Data Penduduk
+                        </button>
+                    </form>
+                </div>
+            `;
+        }
+
+        function saveVillageStats(e) {
+            e.preventDefault();
+            const lk = Number(document.getElementById('st-lk').value);
+            const pr = Number(document.getElementById('st-pr').value);
+            const kk = Number(document.getElementById('st-kk').value);
+            appState.stats.lakiLaki = lk;
+            appState.stats.perempuan = pr;
+            appState.stats.penduduk = lk + pr;
+            appState.stats.kepalaKeluarga = kk;
+            saveState();
+            showToast("Statistik kependudukan berhasil diperbarui!", "success");
+        }
+
+        // D. Manajemen Pengguna Perangkat Desa
+        function renderAdminUsers() {
+            return `
+                <div class="space-y-6 max-w-4xl">
+                    <form onsubmit="addAdminUser(event)" class="bg-white p-6 rounded-xl border border-gray-200 space-y-4">
+                        <h3 class="font-display font-bold text-base text-gray-900">Tambah Akun Operator / Perangkat Desa</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <input type="text" id="usr-nama" required placeholder="Nama & Gelar Perangkat" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <input type="email" id="usr-email" required placeholder="Email Login" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                            <select id="usr-role" class="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white">
+                                <option value="Operator Layanan & Konten">Operator Layanan & Konten</option>
+                                <option value="Admin Keuangan (APBDes)">Admin Keuangan (APBDes)</option>
+                                <option value="Super Admin (Sekretaris Desa)">Super Admin</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white font-bold rounded-lg text-xs cursor-pointer">+ Tambah Pengguna</button>
+                    </form>
+
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-100 font-bold border-b">
+                                <tr>
+                                    <th class="p-3.5">Nama Perangkat</th>
+                                    <th class="p-3.5">Email Login</th>
+                                    <th class="p-3.5">Hak Akses</th>
+                                    <th class="p-3.5 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                ${appState.users.map(u => `
+                                    <tr>
+                                        <td class="p-3.5 font-bold">${u.nama}</td>
+                                        <td class="p-3.5 text-gray-600">${u.email}</td>
+                                        <td class="p-3.5"><span class="px-2 py-0.5 bg-gray-100 rounded text-xs font-semibold">${u.role}</span></td>
+                                        <td class="p-3.5 text-right">
+                                            ${u.id !== 1 ? `<button onclick="deleteUser(${u.id})" class="text-xs text-red-600 font-bold hover:underline">Hapus</button>` : '<span class="text-xs text-gray-400">Utama</span>'}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addAdminUser(e) {
+            e.preventDefault();
+            appState.users.push({
+                id: Date.now(),
+                nama: document.getElementById('usr-nama').value,
+                email: document.getElementById('usr-email').value,
+                role: document.getElementById('usr-role').value
+            });
+            saveState();
+            renderAdminPage('users');
+            showToast("Akun perangkat desa baru berhasil ditambahkan.", "success");
+        }
+
+        function deleteUser(id) {
+            appState.users = appState.users.filter(u => u.id !== id);
+            saveState();
+            renderAdminPage('users');
+            showToast("Akun pengguna dihapus.", "info");
+        }
+
+        // Fitur Ekspor CSV (Kompatibel Microsoft Excel)
+        function exportCSV(type) {
+            let csv = "";
+            let filename = "data_desa_rambatan_wetan.csv";
+
+            if (type === 'penduduk') {
+                csv = "Wilayah RW,Jumlah RT,Jumlah KK,Laki-laki,Perempuan,Total Jiwa\n";
+                appState.rtData.forEach(r => {
+                    csv += `"${r.rw}",${r.rtCount},${r.kk},${r.lk},${r.pr},${r.lk + r.pr}\n`;
+                });
+                filename = "Data_Penduduk_Rambatan_Wetan_2026.csv";
+            } else if (type === 'surat') {
+                csv = "No Registrasi,Nama Pemohon,NIK,Jenis Surat,Tanggal,Status\n";
+                appState.suratRequests.forEach(s => {
+                    csv += `"${s.id}","${s.nama}","${s.nik}","${s.jenis}","${s.tanggal}","${s.status}"\n`;
+                });
+                filename = "Rekap_Layanan_Surat_Rambatan_Wetan.csv";
+            }
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            showToast(`Berhasil mengunduh ${filename}`, "success");
+        }
+
+        // Inisialisasi Aplikasi saat Halaman Dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('id-ID', options);
+            applyGlobalSettings();
+            navigatePublic('beranda');
+        });
+    </script>
+</body>
+</html>
